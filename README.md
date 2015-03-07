@@ -1,9 +1,9 @@
-# wyu-sing
+# 一分钟歌声 `1min`
 
-The school singing place for students in WYU, suggested by @Jayin<br>
-Site: ~~<http://etipswww.duapp.com>~~ (Deprecated)
+- 历史仓库：<https://github.com/fritx/wyu-sing>
+- 在线演示：<http://1min.fritx.me>
 
-## Screenshots
+## 效果图
 
 <img width="170" src="screenshots/Screenshot_2014-03-26-20-12-22.jpeg">
 &nbsp;

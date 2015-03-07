@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="format-detection" content="telephone=no"/>
+  <title data-bind="meta" data-name="title"></title>
+  <link rel="stylesheet" href="/lib/common.css"/>
+</head>
+<body>
+<div id="container">
+  <div class="page">
+    <div class="nav-bar">
+      <div class="nav-bar-inner padding10">
+        <a>
+							<span class="element brand">
+								<i class="icon-mic"></i>
+								<span data-bind="meta" data-name="title"></span>
+								<small data-bind="meta" data-name="version"></small>
+							</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="frame"></div>
+  <div class="page">
+    <div class="nav-bar">
+      <div class="nav-bar-inner padding10">
+                        <span class="element">
+                            <span data-bind="meta" data-name="year"></span>
+                            &nbsp;&copy;<span data-bind="meta" data-name="title"></span>
+                        </span>
+                        <span class="element">
+                            Styled by <a target="_blank" href="https://github.com/olton/Metro-UI-CSS" class="external fg-color-white">Metro
+                          UI CSS</a>
+                        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/lib/underscore-min.js"></script>
+<script src="/lib/zepto.min.js"></script>
+<!-- Zepto as jQuery -->
+<script> var jQuery = $; </script>
+<script src="/lib/modern/js/input-control.js"></script>
+<script src="/lib/wechat.js"></script>
+<script src="/lib/common.js"></script>
+
+<script src="/snbar/app/app.js"></script>
+<script src="/snbar/app/app-songlist.js"></script>
+<script src="/snbar/app/app-song.js"></script>
+<script>
+  app.init();
+  app.showMeta();
+  app.loadPage(window.location.hash || '#songlist');
+</script>
+</body>
+</html>

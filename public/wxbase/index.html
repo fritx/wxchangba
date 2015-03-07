@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Wxbase测试</title>
+
+  <link rel="stylesheet" href="/lib/modern/css/modern.css"/>
+  <link rel="stylesheet" href="/lib/modern/css/modern-responsive.css"/>
+  <style>
+    @media (min-width: 980px) {
+      #container {
+        width: 980px;
+        margin: auto;
+      }
+    }
+
+    body {
+      padding: 0 10px !important;
+    }
+
+    #form-send fieldset {
+      margin-top: 45px;
+      padding-top: 0;
+    }
+
+    #form-send fieldset[disabled] {
+      display: none;
+    }
+
+    #form-send fieldset legend {
+      font-size: 16pt;
+      top: -30px;
+    }
+
+    #form-send .bottom {
+      margin-top: 15px;
+    }
+
+    #form-send textarea {
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <div class="page">
+    <div class="nav-bar">
+      <div class="nav-bar-inner padding10">
+        <a>
+							<span class="element brand">
+								WxBase-App <small>0.0.2</small>
+							</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-content">
+        <h1>Wxbase
+          <small>测试</small>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class="page secondary">
+    <div class="page-region">
+      <div class="page-region-content">
+        <div class="grid">
+          <div class="row">
+            <div class="span10">
+              <form id="form-send">
+                <fieldset>
+                  <legend>基本信息</legend>
+                  <div>
+                    <h3>用户名</h3>
+
+                    <div class="input-control text">
+                      <input type="text" name="fromUserName" value="test-user"/>
+                    </div>
+                  </div>
+                  <div>
+                    <h3>MsgId</h3>
+
+                    <div class="input-control text">
+                      <input type="text" name="msgId" value="123456"/>
+                    </div>
+                  </div>
+                  <input type="hidden" name="toUserName" value="the-host"/>
+
+                  <div>
+                    <h3>消息类型</h3>
+                    <label class="input-control radio">
+                      <input type="radio" name="msgType" value="text" checked>
+                      <span class="helper">文本</span>
+                    </label>
+                    <label class="input-control radio">
+                      <input type="radio" name="msgType" value="voice">
+                      <span class="helper">语音</span>
+                    </label>
+                    <label class="input-control radio">
+                      <input type="radio" name="msgType" value="image">
+                      <span class="helper">图片</span>
+                    </label>
+                    <label class="input-control radio">
+                      <input type="radio" name="msgType" value="location">
+                      <span class="helper">位置</span>
+                    </label>
+                    <label class="input-control radio">
+                      <input type="radio" name="msgType" value="event">
+                      <span class="helper">事件</span>
+                    </label>
+                  </div>
+                </fieldset>
+
+                <fieldset data-type="text" disabled>
+                  <legend>文本消息</legend>
+                  <div>
+                    <h3>内容</h3>
+
+                    <div class="input-control textarea">
+                      <textarea name="content"></textarea>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset data-type="image" disabled>
+                  <legend>图片消息</legend>
+                  <div>
+                    <h3>URL</h3>
+
+                    <div class="input-control text">
+                      <input type="url" name="picUrl" value="http://wyu.cn/a.png"/>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset data-type="voice" disabled>
+                  <legend>语音消息</legend>
+                  <div>
+                    <h3>MediaId</h3>
+
+                    <div class="input-control text">
+                      <input type="text" name="mediaId" value="abcdef"/>
+                    </div>
+                  </div>
+                  <div>
+                    <h3>格式</h3>
+
+                    <div class="input-control text">
+                      <input type="text" name="format" value="amr"/>
+                    </div>
+                  </div>
+                  <div>
+                    <h3>识别</h3>
+
+                    <div class="input-control text">
+                      <input type="text" name="recognition" value="小猪"/>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset data-type="location" disabled>
+                  <legend>位置消息</legend>
+                  <h3>X坐标</h3>
+
+                  <div class="input-control text">
+                    <input type="number" name="locationX" value="120"/>
+                  </div>
+                  <h3>Y坐标</h3>
+
+                  <div class="input-control text">
+                    <input type="number" name="locationY" value="30"/>
+                  </div>
+                  <h3>缩放</h3>
+
+                  <div class="input-control text">
+                    <input type="number" name="scale" value="1"/>
+                  </div>
+                  <h3>地理标签</h3>
+
+                  <div class="input-control text">
+                    <input type="text" name="label" value="洪湖公园"/>
+                  </div>
+                </fieldset>
+                <fieldset data-type="event" disabled>
+                  <legend>事件消息</legend>
+                  <div>
+                    <h3>事件类型</h3>
+                    <label class="input-control radio">
+                      <input type="radio" name="event" value="subscribe" checked>
+                      <span class="helper">订阅</span>
+                    </label>
+                    <label class="input-control radio">
+                      <input type="radio" name="event" value="unsubscribe">
+                      <span class="helper">取消订阅</span>
+                    </label>
+                    <label class="input-control radio">
+                      <input type="radio" name="event" value="CLICK">
+                      <span class="helper">按键</span>
+                    </label>
+                  </div>
+                  <div>
+                    <h3>按键值</h3>
+
+                    <div class="input-control text">
+                      <input type="text" name="eventKey" value="key-2013"/>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div class="bottom">
+                  <input type="submit" value="发送"/>
+                </div>
+              </form>
+
+              <div id="log"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="nav-bar">
+        <div class="nav-bar-inner padding10">
+							<span class="element">
+								2013, Wxbase-App © by <a class="fg-color-white" href="https://github.com/node200ok">n200ok</a>.
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								Styled by <a href="https://github.com/olton/Metro-UI-CSS" class="fg-color-white">Metro UI CSS</a>
+							</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/lib/underscore-min.js"></script>
+<script src="/lib/zepto.min.js"></script>
+<script>var jQuery = $;</script>
+<script src="/lib/modern/js/input-control.js"></script>
+<script src="/lib/jquery.serializeJSON.min.js"></script>
+<script src="/lib/wx-parser.js"></script>
+<script>
+  var $form = $('#form-send'),
+      $fsBasis = $form.find('fieldset').first(),
+      $fsTypes = $form.find('fieldset[data-type]'),
+      $log = $('#log'),
+      wxParser = new WxParser(),
+      currMsgType;
+
+  // toggle fieldsets
+  $fsBasis.find('[name="msgType"]').on('change',function () {
+    var msgType = currMsgType = $(this).val();
+    $fsTypes.attr('disabled', true)
+        .filter('[data-type="' + msgType + '"]').removeAttr('disabled');
+  }).first().trigger('change');
+
+  // toggle eventKey
+  var $fsEvent = $fsTypes.filter('[data-type="event"]');
+  $fsEvent.find('[name="event"]').on('change',function () {
+    $fsEvent.find('[name="eventKey"]')
+        .attr('disabled', $(this).val() !== 'CLICK');
+  }).first().trigger('change');
+
+  // form submit
+  $form.on('submit', function (ev) {
+    ev.preventDefault();
+    var msgType = currMsgType, reqObj = {
+      createTime: Math.ceil(new Date().getTime() / 1000),
+      msgType: msgType
+    }
+    _.extend(reqObj, $form.serializeJSON());
+
+    var reqXml = wxParser.toXml(reqObj);
+    console.log('sent:', reqXml);
+    $log.empty();
+    $.ajax({
+      type: 'post',
+      url: '/wx',
+      processData: false,
+      data: reqXml,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Content-Type', 'text/plain');
+        $log.append([
+          '<p>', '<small>sent: </small>' + JSON.stringify(wxParser.toMsg(reqXml)), '</p>'
+        ].join(''));
+      },
+      success: function (resXml) {
+        console.log('received:', resXml);
+        var resObj = wxParser.toMsg(resXml);
+        $log.append([
+          '<p>', '<small>received: </small>' + JSON.stringify(resObj), '</p>'
+        ].join(''));
+      }
+    });
+  });
+</script>
+</body>
+</html>

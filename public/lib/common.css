@@ -1,0 +1,76 @@
+@import url("modern/css/modern.css");
+@import url("modern/css/modern-responsive.css");
+
+@media (min-width: 980px) {
+  /* limit the width */
+  #container {
+    width: 980px;
+    margin: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  /* enlarge the button */
+  .page.secondary .page-back {
+    width: 30px;
+    height: 30px;
+    top: 29px !important;
+  }
+
+  /* same as .page.secondary */
+  .page .page-header .page-header-content {
+    height: 60px;
+    min-height: 50px;
+  }
+}
+
+body {
+  padding: 0 10px !important;
+  background-color: white;
+}
+
+a.back-button {
+  cursor: pointer;
+}
+
+th, td {
+  word-break: break-all;
+}
+
+th {
+  min-width: 75px;
+}
+
+a.shortcut {
+  margin: 0 6px 6px 0 !important;
+}
+
+a.shortcut.last {
+  margin-right: 0 !important;
+}
+
+.notices .notice-icon {
+  font-size: 32px;
+  line-height: 32px;
+}
+
+.element.brand > i {
+  vertical-align: top;
+}
+
+.pagination {
+  margin: 10px 0 0 0;
+}
+
+.notices {
+  margin-top: 12px;
+}
+
+.notices .segment {
+  margin-right: 6px;
+}
+
+/* fix bug */
+.input-control > input[type=text], .input-control > input[type=email], .input-control > input[type=url], .input-control > input[type=phone], .input-control > input[type=password], .input-control > input[type=number], .input-control > input[type=time], .input-control > select, .input-control > textarea {
+  margin-right: 0;
+}

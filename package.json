@@ -1,0 +1,24 @@
+{
+  "name": "wyu-sing",
+  "version": "0.1.0",
+  "description": "The school singing place for students in WYU",
+  "meta": {
+    "title": "一分钟歌声",
+    "year": "2014",
+    "studio": "袂卓工作室"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fritx/wyu-sing.git"
+  },
+  "license": "MIT",
+  "main": "app.js",
+  "dependencies": {
+    "underscore": "1.5.2",
+    "express": "3.4.0",
+    "async": "0.2.9",
+    "mongodb": "1.3.19",
+    "bufferhelper": "0.2.0",
+    "xml2js": "0.2.8"
+  }
+}

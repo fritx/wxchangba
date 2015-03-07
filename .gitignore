@@ -11,5 +11,14 @@ pids
 logs
 results
 
+~*
+*~
+*.bak
+
 npm-debug.log
 node_modules
+
+/private
+.idea
+
+*.mp3

@@ -1,19 +1,28 @@
 var path = require('path'),
   _ = require('underscore'),
-  rootDir = path.resolve(__dirname, '..'),
+  rootDir = path.resolve(__dirname, '../..'),
   contentDir = path.join(rootDir, 'content'),
-  host = '120.24.77.213',
-  siteUrl = 'http://' + host + '/',
-  snbarUrl = siteUrl + 'snbar/',
-  songListUrl = snbarUrl + '#songlist',
+  port = 3099,
+  host = 'localhost',
+  siteUrl = 'http://' + host + ':' + port,
+  songListUrl = siteUrl + '#songlist',
   songDownUrl = siteUrl + 'song/down/',
   assetsUrl = siteUrl + 'assets/',
-  package = require('../package.json');
+  package = require('../../package.json');
 
 module.exports = {
+  port: port,
   host: host,
-  wxPath: '/wx',
   secret: '' + Math.random(),
+  mongo: {
+    host: 'localhost',
+    port: 27017,
+    //user: {
+    //  username: '',
+    //  password: ''
+    //},
+    dbname: 'etips-www'
+  },
   dirs: {
     root: rootDir,
     public: publicDir = path.join(rootDir, 'public'),
@@ -30,6 +39,7 @@ module.exports = {
     logo: assetsUrl + 'logo.png'
   },
   wx: {
+    path: '/wx',
     validGet: true,
     validPost: false,
     loginAccount: true,
@@ -37,9 +47,11 @@ module.exports = {
     minSeconds: 20,
     maxNameLength: 16,
     token: 'whahax',
-    account: require('../private/wx-account')	// private
+    account: require('../../private/wx-account') // private
   },
-  meta: _.extend(package['meta'], {
+  meta: {
+    title: '一分钟歌声',
+    year: package['year'],
     version: package['version']
-  })
+  }
 }

@@ -4,9 +4,9 @@ var http = require('http'),
   _ = require('underscore'),
   async = require('async'),
   express = require('express'),
-  mode = (process.argv && process.argv[2]) || 'ecs', // 运行模式
+  mode = (process.argv && process.argv[2]) || 'example', // 运行模式
   config = require('./config/')(mode),
-  app = express(),
+  app = module.exports = express(),
   Mongo = require('./lib/mongo'),
   wxVoiceThief = require('./lib/wx/wx-voice-thief'),
   WxBase = require('./lib/wx/wxbase/'),
@@ -37,11 +37,16 @@ async.waterfall([
     }, mgConfig.user);
   },
   function (db, callback) {
-    http.createServer(app).on('error',function (err) {
+    var server = http.createServer(app).on('error',function (err) {
       callback(Error('Port ' + config.port + ' Occupied'));
-    }).listen(config.port, function () {
+    });
+    if (!module.parent) {
+      server.listen(config.port, function () {
         callback(null, db, config.port);
       });
+    } else {
+      callback(null, db, config.port);
+    }
   }
 ], function (err, db, port) {
   if (err) throw err;
@@ -53,9 +58,6 @@ async.waterfall([
   app.set('userColl', userColl);
   app.set('presongColl', presongColl);
   app.set('songColl', songColl);
-
-  
-
 
 
   // 登录账号
@@ -129,20 +131,11 @@ async.waterfall([
       // 跳转activity
       //self.activityHash['submit'].welcome(req, res);
     });
-  }, 1000 * 40); // 40s
-
-
-
-
+  }, 1000 * 60 * 5); // 5min
 
 
   // 使用 wxbase
-  wxBase.watch(app, config.wxPath);
-
-  app.get('/', function (req, res) {
-    res.redirect('/snbar/');
-  });
-
+  wxBase.watch(app, config.wx.path);
 
   /* Meta信息提取 */
   app.get('/meta/get', function (req, res) {

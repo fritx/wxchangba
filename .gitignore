@@ -22,3 +22,6 @@ node_modules
 .idea
 
 *.mp3
+config/modes/**
+!config/modes/example.js
+dump

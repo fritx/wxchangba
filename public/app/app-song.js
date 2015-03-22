@@ -16,7 +16,7 @@ app.showSong = function () {
   $back.on('click', app.backFromSong);
   $random.on('click', app.gotoRandomSong);
 
-  $.get('/song/view/' + id, function (data) {
+  $.get('song/view/' + id, function (data) {
     // 如果是字符串则parseJSON
     if (_.isString(data)) data = $.parseJSON(data);
     var msg = data['msg'],
@@ -47,7 +47,7 @@ app.showSong = function () {
       app.toggleSong(false);
     }).attr('preload', '') // 预加载
     // 加上.mp3后缀 格式友好
-    .attr('src', '/song/down/' + msgId + '.mp3'); // 加载歌曲
+    .attr('src', 'song/down/' + msgId + '.mp3'); // 加载歌曲
 
     $toggle.on('click', app.toggleSong);
       //.find('#play').enable();
@@ -57,7 +57,7 @@ app.showSong = function () {
     //}).enable();
     $down.addClass('external')
       .attr('target', '_blank')
-      .attr('href', '/song/down/' + msgId + '.mp3');
+      .attr('href', 'song/down/' + msgId + '.mp3');
   });
 }
 
@@ -77,7 +77,7 @@ app.toggleSong = function (flag) {
 }
 
 app.downloadSong = function (id) {
-  window.open('/song/down/' + id);
+  window.open('song/down/' + id);
 }
 app.backFromSong = function () {
   var lastHash = app.lastHash;

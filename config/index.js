@@ -1,7 +1,6 @@
 module.exports = function (mode) {
   try {
-    var config = require('./common');
-    require('./modes/' + mode)(config);
+    var config = require('./modes/' + mode);
     return config;
   } catch (err) {
     console.error(err);

@@ -24,7 +24,7 @@ app.init = function () {
     }
   });
 
-  app.entry = window.location.origin + '/snbar/';
+  app.entry = window.location.origin + window.location.pathname;
   // 微信分享
   app.wxImg = app.entry + 'logo.jpg';
   app.wxLink = app.entry;
@@ -80,7 +80,7 @@ app.notify = function (msg) {
 
 app.showMeta = function () {
   var $meta = $('[data-bind="meta"]');
-  $.get('/meta/get', function (data) {
+  $.get('meta/get', function (data) {
     // 如果是字符串则parseJSON
     if (!_.isObject(data)) data = $.parseJSON(data);
     var meta = data['meta'];
@@ -93,7 +93,7 @@ app.showMeta = function () {
 }
 
 app.gotoRandomSong = function () {
-  $.get('/song/sample', { 'limit': 1 }, function (data) {
+  $.get('song/sample', { 'limit': 1 }, function (data) {
     // 如果是字符串则parseJSON
     if (!_.isObject(data)) data = $.parseJSON(data);
     var songs = data['songs'];

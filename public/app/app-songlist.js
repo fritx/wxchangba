@@ -28,7 +28,7 @@ app.showSongList = function () {
   app.wxLink = app.entry;
   app.wxDesc = rankStr + '列表';
 
-  $.get('/song/list', {
+  $.get('song/list', {
     'rank': rank,
     'limit': countPerPage,
     'skip': countPerPage * (page - 1)

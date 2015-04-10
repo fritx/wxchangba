@@ -1,0 +1,161 @@
+<style>
+  #table-song {
+    margin-top: 8px;
+    margin-bottom: 18px;
+  }
+
+  #toggle {
+    display: inline-block;
+  }
+
+  #toggle.on #play {
+    display: none;
+  }
+
+  #toggle.off #pause {
+    display: none;
+  }
+
+  #audio {
+    display: none;
+  }
+
+@media (max-width: 480px) {
+  #frame > .page {
+    margin-top: -4px;
+  }
+}
+</style>
+
+<div class="page secondary">
+  <div class="page-header">
+    <div class="page-header-content">
+      <h1>
+        <i class="icon-music"></i>
+        <span>歌曲</span>
+        <small>播放</small>
+      </h1>
+      <a id="back" class="back-button big page-back"></a>
+    </div>
+  </div>
+
+  <div class="page-region">
+    <div class="page-region-content">
+      <div class="grid">
+        <div class="row">
+          <div class="span10">
+            <table id="table-song">
+              <tbody>
+              <tr class="selected-row">
+                <td>
+                  <i class="icon-link"></i>歌曲ID
+                </td>
+                <td>
+                  <span id="msgid"></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="icon-mic"></i>歌曲名称
+                </td>
+                <td>
+                  <span id="songname"></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="icon-clock"></i>长度
+                </td>
+                <td>
+                  <span id="playlength"></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="icon-headphones"></i>播放量
+                </td>
+                <td>
+                  <span id="plays"></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="icon-calendar"></i>创建时间
+                </td>
+                <td>
+                  <span id="createtime"></span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+            <audio id="audio"></audio>
+
+            <div class="btngroup">
+            <a id="random" class="shortcut">
+                            <span class="icon">
+                                <i class="icon-link-2"></i>
+                            </span>
+                            <span class="label">
+                                随机听
+                            </span>
+            </a>
+            <a id="down" class="shortcut">
+                            <span class="icon">
+                                <i class="icon-download-2"></i>
+                            </span>
+                            <span class="label">
+                                下载
+                            </span>
+            </a>
+            <div id="toggle" class="off">
+              <a id="play" class="shortcut last">
+                                <span class="icon">
+                                    <i class="icon-play"></i>
+                                </span>
+                                <span class="label">
+                                    播放
+                                </span>
+              </a>
+              <a id="pause" class="shortcut last">
+                                <span class="icon">
+                                    <i class="icon-pause"></i>
+                                </span>
+                                <span class="label">
+                                    暂停
+                                </span>
+              </a>
+            </div>
+            </div>
+
+            <div class="notices">
+              <div class="bg-color-greenLight fg-color-white">
+                <div class="notice-icon">
+                  <i class="icon-volume-2"></i>
+                </div>
+                <div class="notice-header fg-color-white">播放后没有声音?</div>
+                <div class="notice-text">
+                  <span class="segment">请检查:</span>
+                                    <span class="segment">
+                                        <i class="icon-checkbox"></i>网络连接正常
+                                    </span>
+                                    <span class="segment">
+                                        <i class="icon-checkbox"></i>关闭静音模式
+                                    </span>
+                                    <span class="segment">
+                                        <i class="icon-checkbox"></i>音量足够大
+                                    </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  app.showSong();
+</script>

@@ -179,12 +179,12 @@ async.waterfall([
     res.send({ 'msg': '退出成功' });
   });
   // 管理员认证过程
-  app.all('/admin/*', function (req, res, next) {
+  app.all('/admin/op/*', function (req, res, next) {
     if (!req.isAdmin()) return res.send({ 'msg': '请登录管理员' });
     next();
   });
   // 查看内容文件列表
-  app.get('/admin/content/list', function (req, res) {
+  app.get('/admin/op/content/list', function (req, res) {
     var contentDir = config.dirs.content,
       dir = req.query['dir'] || '',
       dirpath = path.join(contentDir, dir);
@@ -195,7 +195,7 @@ async.waterfall([
     });
   });
   // 删除内容文件
-  /*app.post('/admin/content/del', function(req, res) {
+  /*app.post('/admin/op/content/del', function(req, res) {
    var contentDir = config.dirs.content,
    thepath = req.body['file'] || '',
    filepath = path.join(contentDir, thepath);
@@ -209,7 +209,7 @@ async.waterfall([
    });
    });*/
   // 提取DB集合数据
-  app.get('/admin/data/export/:coll', function (req, res) {
+  app.get('/admin/op/data/export/:coll', function (req, res) {
     var collname = req.params['coll'],
       db = app.get('db');
     db.collectionNames(function (err, colls) {
@@ -225,7 +225,7 @@ async.waterfall([
     });
   });
   // 管理员删除歌曲
-  app.post('/admin/song/del/:id', function (req, res) {
+  app.post('/admin/op/song/del/:id', function (req, res) {
     var songColl = app.get('songColl'),
       msgId = parseInt(req.params['id']);
     songColl.findOne({ msgid: msgId }, function (err, song) {

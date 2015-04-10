@@ -8,17 +8,17 @@
   <title data-bind="meta" data-name="title"></title>
 </head>
 <body style="background-color:#fdfdfd">
-<link rel="stylesheet" href="lib/common.css"/>
+<link rel="stylesheet" href="../lib/common.css"/>
 <div id="container">
   <div class="page">
     <div class="nav-bar">
       <div class="nav-bar-inner padding10">
         <a>
-							<span class="element brand">
-								<i class="icon-mic"></i>
-								<span data-bind="meta" data-name="title"></span>
-								<small data-bind="meta" data-name="version"></small>
-							</span>
+              <span class="element brand">
+                <i class="icon-mic"></i>
+                <span data-bind="meta" data-name="title"></span>
+                <small data-bind="meta" data-name="version"></small>
+              </span>
         </a>
       </div>
     </div>
@@ -39,20 +39,19 @@
   </div>
 </div>
 
-<img style="position:absolute;left:-999px;" src="logox.jpg" alt="logo"/>
-<script src="lib/lodash.min.js"></script>
-<script src="lib/zepto.min.js"></script>
+<img style="position:absolute;left:-999px;" src="../logox.jpg" alt="logo"/>
+<script src="../lib/lodash.min.js"></script>
+<script src="../lib/zepto.min.js"></script>
 <!-- Zepto as jQuery -->
 <script> var jQuery = $; </script>
-<script src="lib/common.js"></script>
+<script src="../lib/common.js"></script>
 
-<script src="app/app.js"></script>
-<script src="app/app-index.js"></script>
+<script src="../app/app.js"></script>
+<script src="app/app-admin.js"></script>
 <script src="app/app-songlist.js"></script>
 <script src="app/app-song.js"></script>
 <script>
   app.init();
-  app.initIndex();
   app.showMeta();
   app.loadPage(window.location.hash || '#songlist');
 </script>

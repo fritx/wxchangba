@@ -1,0 +1,125 @@
+<style>
+  #form-search .input-control {
+    margin-bottom: 0;
+  }
+
+  #table-songs {
+    margin-bottom: 0;
+  }
+  #table-songs tr th:nth-child(1) {
+    min-width: 87px;
+  }
+  #table-songs tr th:nth-child(2) {
+    min-width: 120px;
+  }
+</style>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-content">
+      <h1>
+        <i class="icon-playlist"></i>
+                <span>
+                    <span id="rank"></span>列表
+                </span>
+        <small>
+          共<span id="total"></span>首
+        </small>
+      </h1>
+    </div>
+  </div>
+  <div class="page-region">
+    <div class="page-region-content">
+      <div class="grid">
+        <div class="row">
+          <div class="offset1 span10">
+            <table id="table-songs">
+              <thead>
+              <tr>
+                <th>
+                  <i class="icon-link"></i>歌曲ID
+                </th>
+                <th>
+                  <i class="icon-mic"></i>歌曲名称
+                </th>
+                <th>
+                  <i class="icon-headphones"></i>播放量
+                </th>
+              </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+              <tr>
+                <td colspan="3">
+                  <div id="pagin-songs" class="pagination">
+                    <ul>
+                      <li class="first disabled"><a></a></li>
+                      <li class="disabled"><a>...</a></li>
+                      <li class="active"><a id="page"></a></li>
+                      <li class="disabled"><a>...</a></li>
+                      <li class="last disabled"><a></a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <!--<tr>
+                <td colspan="3">
+                  <form id="form-search">
+                    <div class="input-control text span6">
+                      <input type="text" placeholder="歌曲ID"/>
+                      <button type="submit" class="btn-search"></button>
+                    </div>
+                  </form>
+                </td>
+              </tr>-->
+              </tfoot>
+            </table>
+
+            <div class="btngroup">
+            <a id="random" class="shortcut">
+                            <span class="icon">
+                                <i class="icon-link-2"></i>
+                            </span>
+              <span class="label">随机听</span>
+            </a>
+            <a class="shortcut" href="#songlist?rank=latest">
+                                <span class="icon">
+                                    <i class="icon-history"></i>
+                                </span>
+                <span class="label">最新列表</span>
+            </a>
+            <a class="shortcut last" href="#songlist?rank=hottest">
+                                <span class="icon">
+                                    <i class="icon-stats-up"></i>
+                                </span>
+                <span class="label">最火列表</span>
+            </a>
+            </div>
+
+            <div class="notices">
+              <div class="bg-color-orange fg-color-white">
+                <div class="notice-icon">
+                  <i class="icon-mic"></i>
+                </div>
+                <div class="notice-header fg-color-white">如何贡献歌声?</div>
+                <div class="notice-text">
+                  <span class="segment">提交方式:</span>
+                                    <span class="segment">
+                                        <i class="icon-checkbox"></i>发送语音至微信公众号(一分钟歌声)
+                                    </span>
+                                    <span class="segment">
+                                        <i class="icon-checkbox"></i>网页上直接录音-尽请期待
+                                    </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  app.showSongList();
+</script>

@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="x-ua-compatible" content="chrome=1,ie=edge">
   <title>Wxbase测试</title>
-  <base href="../">
-
-  <link rel="stylesheet" href="lib/modern/css/modern.css"/>
-  <link rel="stylesheet" href="lib/modern/css/modern-responsive.css"/>
+  <link rel="stylesheet" href="../lib/modern/css/modern.css"/>
+  <link rel="stylesheet" href="../lib/modern/css/modern-responsive.css"/>
   <style>
     @media (min-width: 980px) {
       #container {
@@ -234,12 +234,12 @@
   </div>
 </div>
 
-<script src="lib/underscore-min.js"></script>
-<script src="lib/zepto.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/zepto.min.js"></script>
 <script>var jQuery = $;</script>
-<script src="lib/modern/js/input-control.js"></script>
-<script src="lib/jquery.serializeJSON.min.js"></script>
-<script src="lib/wx-parser.js"></script>
+<script src="../lib/modern/js/input-control.js"></script>
+<script src="../lib/jquery.serializeJSON.min.js"></script>
+<script src="../lib/wx-parser.js"></script>
 <script>
   var $form = $('#form-send'),
       $fsBasis = $form.find('fieldset').first(),
@@ -276,7 +276,7 @@
     $log.empty();
     $.ajax({
       type: 'post',
-      url: 'wx',
+      url: '../wx',
       processData: false,
       data: reqXml,
       beforeSend: function (xhr) {

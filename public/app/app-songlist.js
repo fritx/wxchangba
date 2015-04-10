@@ -16,6 +16,8 @@ app.showSongList = function () {
     $random = $frame.find('#random'),
     $formSearch = $frame.find('#form-search');
 
+  _hmt.push(['_trackEvent', 'songlist', 'show', rank]);
+
   $rank.text(rankStr);
   $page.text(page);
   $random.on('click', app.gotoRandomSong);
@@ -27,6 +29,7 @@ app.showSongList = function () {
 
   app.wxLink = app.entry;
   app.wxDesc = rankStr + '列表';
+  document.title = '一分钟歌声';
 
   $.get('song/list', {
     'rank': rank,
@@ -61,20 +64,32 @@ app.showSongList = function () {
     var $active = $paginSongs.find('.active'),
       pageCount = Math.ceil(total / countPerPage),
       hrefTmpl = '#songlist?rank=<%=rank%>&page=<%=page%>',
-      liTmpl = '<li><a href="' + hrefTmpl + '"><%=page%></a></li>';
+      hrefTmplFn = _.template(hrefTmpl),
+      liTmplFn = _.template('<li><a href="' + hrefTmpl + '"><%=page%></a></li>');
     if (page > 1) {
-      $active.before(_.template(liTmpl, {
+      $active.before(liTmplFn({
           rank: rank, page: page - 1
-        })).siblings('.first').removeClass('disabled').find('a').attr('href', _.template(hrefTmpl, {
+        })).siblings('.first').removeClass('disabled').find('a').attr('href', hrefTmplFn({
           rank: rank, page: 1
         }));
     }
     if (page < pageCount) {
-      $active.after(_.template(liTmpl, {
+      $active.after(liTmplFn({
           rank: rank, page: page + 1
-        })).siblings('.last').removeClass('disabled').find('a').attr('href', _.template(hrefTmpl, {
+        })).siblings('.last').removeClass('disabled').find('a').attr('href', hrefTmplFn({
           rank: rank, page: pageCount
         }));
+    }
+    if (pageCount > 2) {
+      if (page === 1) {
+        $active.next().after(liTmplFn({
+          rank: rank, page: page + 2
+        }));
+      } else if (page === pageCount) {
+        $active.prev().before(liTmplFn({
+          rank: rank, page: page - 2
+        }));
+      }
     }
   });
 }

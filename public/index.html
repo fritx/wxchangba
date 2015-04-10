@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="format-detection" content="telephone=no"/>
   <title data-bind="meta" data-name="title"></title>
-  <link rel="stylesheet" href="lib/common.css"/>
 </head>
-<body>
+<body style="background-color:#fdfdfd">
+<link rel="stylesheet" href="lib/common.css"/>
 <div id="container">
   <div class="page">
     <div class="nav-bar">
@@ -27,8 +27,7 @@
     <div class="nav-bar">
       <div class="nav-bar-inner padding10">
                         <span class="element">
-                            <span data-bind="meta" data-name="year"></span>
-                            &nbsp;&copy;<span data-bind="meta" data-name="title"></span>
+                            &copy;<span data-bind="meta" data-name="year"></span>&nbsp;<span data-bind="meta" data-name="title"></span>
                         </span>
                         <!-- <span class="element">
                             Styled by <a target="_blank" href="https://github.com/olton/Metro-UI-CSS" class="external fg-color-white">Metro
@@ -39,12 +38,11 @@
   </div>
 </div>
 
-<script src="lib/underscore-min.js"></script>
+<img style="position:absolute;left:-999px;" src="logox.jpg" alt="logo"/>
+<script src="lib/lodash.min.js"></script>
 <script src="lib/zepto.min.js"></script>
 <!-- Zepto as jQuery -->
 <script> var jQuery = $; </script>
-<script src="lib/modern/js/input-control.js"></script>
-<script src="lib/wechat.js"></script>
 <script src="lib/common.js"></script>
 
 <script src="app/app.js"></script>
@@ -54,6 +52,17 @@
   app.init();
   app.showMeta();
   app.loadPage(window.location.hash || '#songlist');
+</script>
+
+<!-- baidi tongji -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?76390c573b17e305b2409d9812115401";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>
 </body>
 </html>

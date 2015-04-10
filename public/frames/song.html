@@ -1,6 +1,7 @@
-﻿﻿<style>
+﻿<style>
   #table-song {
     margin-top: 8px;
+    margin-bottom: 18px;
   }
 
   #toggle {
@@ -19,9 +20,11 @@
     display: none;
   }
 
+@media (max-width: 480px) {
   #frame > .page {
-    margin-top: -14px;
+    margin-top: -4px;
   }
+}
 </style>
 
 <div class="page secondary">
@@ -88,6 +91,7 @@
 
             <audio id="audio"></audio>
 
+            <div class="btngroup">
             <a id="random" class="shortcut">
                             <span class="icon">
                                 <i class="icon-link-2"></i>
@@ -121,6 +125,7 @@
                                     暂停
                                 </span>
               </a>
+            </div>
             </div>
 
             <div class="notices">

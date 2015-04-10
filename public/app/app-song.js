@@ -12,6 +12,8 @@ app.showSong = function () {
     $random = $frame.find('#random'),
     $down = $frame.find('#down'),
     $toggle = $frame.find('#toggle');
+  
+  _hmt.push(['_trackEvent', 'song', 'show', id]);
 
   $back.on('click', app.backFromSong);
   $random.on('click', app.gotoRandomSong);
@@ -32,6 +34,7 @@ app.showSong = function () {
 
     app.wxLink = window.location.href;
     app.wxDesc = song['name'] + ' - ' + playlengthStr;
+    document.title = app.wxDesc;
 
     $plays.text(song['plays']);
     $createtime.text(song['createtime'] ? (function (t) {
@@ -52,12 +55,12 @@ app.showSong = function () {
     $toggle.on('click', app.toggleSong);
       //.find('#play').enable();
 
-    //$down.on('click',function () {
-    //  app.downloadSong(msgId);
-    //}).enable();
-    $down.addClass('external')
-      .attr('target', '_blank')
-      .attr('href', 'song/down/' + msgId + '.mp3');
+    $down.on('click',function () {
+      app.downloadSong(msgId);
+    }).enable();
+    //$down.addClass('external')
+    // .attr('target', '_blank')
+    // .attr('href', 'song/down/' + msgId + '.mp3');
   });
 }
 
@@ -67,6 +70,8 @@ app.toggleSong = function (flag) {
     $audio = $frame.find('#audio'),
     audio = $audio[0];
   flag = _.isBoolean(flag) ? flag : $toggle.is('.off');
+  _hmt.push(['_trackEvent', 'song', 'toggle', flag]);
+
   if (flag) {
     $toggle.removeClass('off').addClass('on');
     audio.play();
@@ -77,9 +82,12 @@ app.toggleSong = function (flag) {
 }
 
 app.downloadSong = function (id) {
-  window.open('song/down/' + id);
+  _hmt.push(['_trackEvent', 'song', 'download', id]);
+  //window.open('song/down/' + id);
+  location.href = 'song/down/' + id;
 }
 app.backFromSong = function () {
+  _hmt.push(['_trackEvent', 'song', 'back', 'songlist']);
   var lastHash = app.lastHash;
   if (/^#songlist/.test(lastHash)) return app.loadPage(lastHash);
   app.loadPage('#songlist');

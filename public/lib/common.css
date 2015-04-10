@@ -1,57 +1,48 @@
 @import url("modern/css/modern.css");
 @import url("modern/css/modern-responsive.css");
 
-@media (min-width: 980px) {
-  /* limit the width */
-  #container {
-    width: 980px;
-    margin: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  /* enlarge the button */
-  .page.secondary .page-back {
-    width: 30px;
-    height: 30px;
-    top: 29px !important;
-  }
-
-  /* same as .page.secondary */
-  .page .page-header .page-header-content {
-    height: 60px;
-    min-height: 50px;
-  }
-}
-
 body {
-  padding: 0 10px !important;
-  background-color: white;
+  padding: 0 !important;
+}
+.hidden {
+  display: none !important;
+}
+
+.grid {
+  margin: 0;
+}
+[class*="span"] {
+  margin-bottom: 0;
+}
+#container {
+  padding: 0 10px;
+}
+
+.page .page-header .page-header-content {
+  min-height: 0px;
+}
+.page .page-region .page-region-content {
+  padding: 16px 0 20px;
 }
 
 a.back-button {
   cursor: pointer;
 }
-
 th, td {
   word-break: break-all;
 }
-
 th {
   min-width: 75px;
 }
 
-a.shortcut {
-  margin: 0 6px 6px 0 !important;
+.btngroup {
+  margin-left: -6px;
 }
-
+a.shortcut {
+  margin: 0 0 0 6px;
+}
 a.shortcut.last {
   margin-right: 0 !important;
-}
-
-.notices .notice-icon {
-  font-size: 32px;
-  line-height: 32px;
 }
 
 .element.brand > i {
@@ -61,16 +52,67 @@ a.shortcut.last {
 .pagination {
   margin: 10px 0 0 0;
 }
-
-.notices {
-  margin-top: 12px;
+.pagination > ul li.active a:hover {
+  top: 0;
+  left: 0;
+  cursor: not-allowed;
 }
 
+.notices {
+  margin-top: 18px;
+}
 .notices .segment {
   margin-right: 6px;
+}
+.notices .notice-icon {
+  font-size: 32px;
+  line-height: 32px;
+}
+.notices > div, .notices > li, .notices > span, .notices > a {
+  margin: 0;
 }
 
 /* fix bug */
 .input-control > input[type=text], .input-control > input[type=email], .input-control > input[type=url], .input-control > input[type=phone], .input-control > input[type=password], .input-control > input[type=number], .input-control > input[type=time], .input-control > select, .input-control > textarea {
   margin-right: 0;
+}
+
+
+@media (max-width: 480px) {
+  /* enlarge the button */
+  .page.secondary .page-back {
+    width: 30px;
+    height: 30px;
+    top: 29px !important;
+  }
+  /* same as .page.secondary */
+  .page .page-header .page-header-content {
+    height: 55px;
+  }
+}
+@media (min-width: 481px) {
+  h1 {
+    font-size: 42pt;
+  }
+  .page .page-header .page-header-content {
+    height: 100px;
+  }
+  .page .page-region .page-region-content {
+    padding: 0 0 30px;
+  }
+  table tbody tr td {
+    font-size: 11pt;
+  }
+}
+@media (min-width: 768px) {
+  /* limit the width */
+  #container {
+    width: 768px;
+    margin: auto;
+  }
+}
+@media (min-width: 980px) {
+  #container {
+    width: 980px;
+  }
 }

@@ -5,9 +5,9 @@ var path = require('path'),
   port = 3099,
   host = 'localhost',
   siteUrl = 'http://' + host + ':' + port,
-  songListUrl = siteUrl + '#songlist',
-  songDownUrl = siteUrl + 'song/down/',
-  assetsUrl = siteUrl + 'assets/',
+  songListUrl = siteUrl + '/#songlist',
+  songDownUrl = siteUrl + '/song/down/',
+  assetsUrl = siteUrl + '/assets/',
   package = require('../../package.json');
 
 module.exports = {
@@ -27,8 +27,8 @@ module.exports = {
     root: rootDir,
     public: publicDir = path.join(rootDir, 'public'),
     content: contentDir,
-    tmp: path.join(contentDir, 'tmp'),
-    presongs: path.join(contentDir, 'presongs'),
+    //tmp: path.join(contentDir, 'tmp'),
+    //presongs: path.join(contentDir, 'presongs'),
     songs: path.join(contentDir, 'songs'),
     assets: path.join(contentDir, 'assets')
   },
@@ -36,7 +36,7 @@ module.exports = {
     site: siteUrl,
     songList: songListUrl,
     songDown: songDownUrl,
-    logo: assetsUrl + 'logo.png'
+    banner: assetsUrl + 'banner.png'
   },
   wx: {
     path: '/wx',

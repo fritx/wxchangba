@@ -1,14 +1,21 @@
 var app = {};
 
 app.init = function () {
+  window._hmt = window._hmt || [];
+
+  if (!window.localStorage) {
+    return alert('你的浏览器不行啊');
+  }
+
   app.$window = $(window);
   app.$document = $(document);
   app.$body = $('body');
+  app.$container = $('#container');
   app.$frame = $('#frame');
   app.hash = window.location.hash;
-  app.lastHash = undefined;
+  app.lastHash = null;
   app.params = getHashParams();
-  app.lastParams = undefined;
+  app.lastParams = null;
 
   app.$window.on('hashchange', function (ev) {
     ev.preventDefault();
@@ -17,10 +24,13 @@ app.init = function () {
   });
 
   app.$body.delegate('[href]', 'tap click', function (ev) {
+    if ($(this).is('.external') || ev.ctrlKey || ev.shiftKey) {
+      return;
+    }
     var href = $(this).attr('href');
-    if (!$(this).is('.external') && href && href !== '#') {
+    if (href && href !== '#') {
       ev.preventDefault();
-      app.loadPage(href)
+      app.loadPage(href);
     }
   });
 
@@ -39,9 +49,9 @@ app.init = function () {
       'title': app.wxTitle
     };
   };
-  wechat('friend', wxData, wxCallback);     // 朋友
-  wechat('timeline', wxData, wxCallback);   // 朋友圈
-  wechat('weibo', wxData, wxCallback);      // 微博
+  //wechat('friend', wxData, wxCallback);     // 朋友
+  //wechat('timeline', wxData, wxCallback);   // 朋友圈
+  //wechat('weibo', wxData, wxCallback);      // 微博
 
   function wxCallback(res) {
     console.log(JSON.stringify(res))
@@ -54,28 +64,21 @@ app.reloadPage = function (success) {
 app.loadPage = function (hash, success) {
   var mat = hash.substr(1).match(/^([^\?]*)(\?[^\?]*)?$/);
   var href = 'frames/' + (mat[1] || '') + '.html' + (mat[2] || '');
-  $.ajax({
-    type: 'get',
-    url: href,
-    success: function (html) {
-      if (app.lastHash !== app.hash) app.lastHash = app.hash;
-      window.location.hash = app.hash = hash;
-      app.lastParams = app.params;
-      app.params = getHashParams();
-      app.$frame.html(html);
-      window.scrollTo(0, 0); // 窗口返回最顶
-      success && success();
-    },
-    error: function () {
-      throw new Error('页面 ' + hash + ' 加载失败');
-      if (app.hash === hash) window.history.go(-1);
-    }
+  $.get(href, function (html) {
+    if (app.lastHash !== app.hash) app.lastHash = app.hash;
+    window.location.hash = app.hash = hash;
+    app.lastParams = app.params;
+    app.params = getHashParams();
+    app.$frame.html(html);
+    window.scrollTo(0, 0); // 窗口返回最顶
+    success && success();
   });
 }
 
 app.notify = function (msg) {
   // 有消息则提示
   msg && alert(msg);
+  msg && _hmt.push(['_trackEvent', 'app', 'notify', msg]);
 }
 
 app.showMeta = function () {
@@ -93,6 +96,7 @@ app.showMeta = function () {
 }
 
 app.gotoRandomSong = function () {
+  _hmt.push(['_trackEvent', 'app', 'random', 'song']);
   $.get('song/sample', { 'limit': 1 }, function (data) {
     // 如果是字符串则parseJSON
     if (!_.isObject(data)) data = $.parseJSON(data);

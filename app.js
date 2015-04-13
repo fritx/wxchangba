@@ -8,7 +8,10 @@ var http = require('http'),
   config = require('./config/')(mode),
   app = module.exports = express(),
   Mongo = require('./lib/mongo'),
-  wxVoiceThief = require('./lib/wx/wx-voice-thief'),
+  WxVoiceThief = require('./lib/wx/wx-voice-thief'),
+  wxVoiceThieves = _.map(config.wx.account, function(account){
+    return new WxVoiceThief(account);
+  }),
   WxBase = require('./lib/wx/wxbase/'),
   wxBase = new WxBase(config.wx),
   adminAccounts = require('./private/admin-accounts');
@@ -61,16 +64,24 @@ async.waterfall([
 
 
   // 登录账号
-  wxVoiceThief.init(config.wx.account);
+  _.each(wxVoiceThieves, function(thief){
+  thief.init();
   // 抓取voice
   setInterval(function () {
-    wxVoiceThief.steal(function (err, msgs) {
+    thief.steal(function (err, msgs) {
+      console.info(thief.wxAccount.username);
       if (err) {
         console.error(err);
         return;
       }
+      console.info('Media stolen: ', _.pluck(msgs, 'id'));
+
+      msgs = _.reject(msgs, function(msg){
+        var playLength = msg['play_length'];
+        return Math.ceil(playLength / 1000) < config.wx.minSeconds;
+      });
     
-    async.each(msgs, function(msg, next){
+    async.eachSeries(msgs, function(msg, next){
       var msgId = msg['id'],
         //fakeId = msg['fakeid'],
         //nickname = msg['nick_name'],
@@ -88,29 +99,35 @@ async.waterfall([
       //}, function (err, num) {
       //  console.info('User profile expanded: ' + user.username);
       //});
-      if (playLength / 1000 < config.wx.minSeconds) {   // 时间不够长
-        //return res.sendWxMsg({
-        //  msgType: 'text',
-        //  content: '你的歌声好像不够' + minSeconds + '秒哦'
-        //});
-        return next(null);
-      }
-
-      // 保存文件
-      var filepath = path.join(songDir, msgId + '.' + config.wx.voiceFormat);
-      fs.exists(filepath, function(exists){
-        if (exists) return;
-      fs.writeFile(filepath, msg._buf, function (err) {
-        if (err) return console.error(err);
-        console.info('New song file saved: ' + msgId);
-      });
-      });
 
       // 保存记录
       songColl.findOne({
         msgid: msgId
       }, function(err, item){
-        if (item) return;
+        if (item) return next(null);
+
+      // 保存文件
+      var filepath = path.join(songDir, msgId + '.' + config.wx.voiceFormat);
+      next = (function(fn){ // 强制延后next 避免微信hangup
+        return function(err){
+          setTimeout(function(){
+            fn(err);
+          }, 1000);
+        }
+      })(next);
+      msg._getbuf(function(err, buf){
+      if (err) {
+        console.error(err);
+        return next(null);
+      }
+      try {
+        fs.writeFileSync(filepath, buf);
+      } catch(err) {
+        console.error(err);
+        return next(null);
+      }
+      console.info('New song file saved: ' + msgId);
+
       var song = {
         published: true,
         name: '歌曲 '+ msgId,
@@ -120,19 +137,20 @@ async.waterfall([
         fakeid: msg['fakeid'],
         nickname: msg['nick_name'],
         createtime: msg['date_time'],  // 单位 s
-        playlength: Math.max(1, Math.round(playLength / 1000))  // 单位 s
+        playlength: Math.max(1, Math.ceil(playLength / 1000))  // 单位 s
       }
       songColl.insert(song, function (err, docs) {
         console.info('New song added: ' + msgId);
+        next(null);
       });
       });
-
-    });
       // 跳转activity
       //self.activityHash['submit'].welcome(req, res);
     });
-  }, 1000 * 60 * 5); // 5min
-
+    });
+    });
+  }, 1000 * 30); // 30s
+  });
 
   // 使用 wxbase
   wxBase.watch(app, config.wx.path);

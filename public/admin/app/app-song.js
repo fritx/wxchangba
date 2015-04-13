@@ -1,6 +1,9 @@
 app.showSong = function () {
   var id = parseInt(app.params['id']),
     $frame = app.$frame,
+    $form = $frame.find('#form'),
+    $reset  = $frame.find('#reset_'),
+    $submit = $frame.find('#submit'),
     $back = $frame.find('#back')
     $tableSong = $frame.find('#table-song'),
     $msgid = $tableSong.find('#msgid'),   // 千万要防止注入
@@ -26,33 +29,37 @@ app.showSong = function () {
     msg && app.notify(msg);
     if (!song) return window.history.go(-1);  // 歌曲不存在 返回原网页
     var msgId = song['msgid'];
-    $msgid.text(msgId);
-    $songname.text(song['name']);
+    $msgid.attr('value', msgId);
+    $songname.attr('value', song['name']);
 
-    var playlengthStr = song['playlength'] + '″'
-    $playlength.text(playlengthStr);
+    var playlengthStr = song['playlength']
+    $playlength.attr('value', playlengthStr);
 
     app.wxLink = window.location.href;
     app.wxDesc = song['name'] + ' - ' + playlengthStr;
     document.title = app.wxDesc;
 
-    $plays.text(song['plays']);
-    $createtime.text(song['createtime'] ? (function (t) {
+    $plays.attr('value', song['plays']);
+    $createtime.attr('value', song['createtime'] ? (function (t) {
       var d = new Date(t),
+        year = d.getFullYear(),
         month = twobits(d.getMonth() + 1),
         day = twobits(d.getDate()),
         hour = twobits(d.getHours()),
-        minute = twobits(d.getMinutes());
-      return month + '/' + day + ' -  ' + hour + ':' + minute;
+        minute = twobits(d.getMinutes()),
+        second = twobits(d.getSeconds());
+      return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
     })(song['createtime'] * 1000) : '-');
 
     $audio.on('ended',function () {
-      app.toggleSong(false);
+      app.toggleSong(id, false);
     }).attr('preload', '') // 预加载
     // 加上.mp3后缀 格式友好
     .attr('src', '../song/down/' + msgId + '.mp3'); // 加载歌曲
 
-    $toggle.on('click', app.toggleSong);
+    $toggle.on('click', function(){
+      app.toggleSong(id);
+    });
       //.find('#play').enable();
 
     $down.on('click',function () {
@@ -61,10 +68,30 @@ app.showSong = function () {
     //$down.addClass('external')
     // .attr('target', '_blank')
     // .attr('href', '../song/down/' + msgId + '.mp3');
+  
+    $form.on('submit', function(e){
+      e.preventDefault()
+      $.post('../admin/op/song/update/' + msgId, {
+        'msgid': $msgid.val(),
+        'name': $songname.val(),
+        'playlength': $playlength.val(),
+        'plays': $plays.val(),
+        'createtime': $createtime.val()
+      }, function(data){
+        if (data['msg']) app.notify(data['msg'])
+        app.reloadPage()
+      })
+    })
+    $reset.on('click', function(){
+      $form[0].reset()
+    })
+    $submit.on('click', function(){
+      $form.submit()
+    })
   });
 }
 
-app.toggleSong = function (flag) {
+app.toggleSong = function (id, flag) {
   var $frame = $('#frame'),
     $toggle = $frame.find('#toggle'),
     $audio = $frame.find('#audio'),

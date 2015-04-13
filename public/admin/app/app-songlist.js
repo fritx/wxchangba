@@ -1,5 +1,5 @@
 app.showSongList = function () {
-  var countPerPage = 30,
+  var countPerPage = 20,
     params = app.params,
     rank = params['rank'] || 'latest',
     rankStr = ({

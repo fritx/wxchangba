@@ -1,0 +1,87 @@
+<style>
+  @media (min-width: 980px) {
+    #container {
+      width: 980px;
+      margin: auto;
+    }
+  }
+
+  body {
+    padding: 0 10px !important;
+  }
+
+  #form-send fieldset {
+    margin-top: 10px;
+    padding: 10px 20px;
+  }
+
+  #form-send fieldset[disabled] {
+    display: none;
+  }
+
+  #form-send fieldset legend {
+    font-size: 16pt;
+    top: -30px;
+  }
+
+  #form-send .bottom {
+    margin-top: 15px;
+  }
+
+  #form-send textarea {
+    resize: none;
+  }
+</style>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-content">
+      <h1>
+        <i class="icon-home"></i>
+        <span>管理平台</span>
+        <small>登录</small>
+      </h1>
+    </div>
+  </div>
+</div>
+<div class="page secondary">
+  <div class="page-region">
+    <div class="page-region-content">
+      <div class="grid">
+        <div class="row">
+          <div class="span10">
+            <form id="form-send">
+              <fieldset>
+                <div>
+                  <h3>用户名</h3>
+                  <div class="input-control text">
+                    <input type="text" name="user"/>
+                  </div>
+                </div>
+                <div>
+                  <h3>密码</h3>
+                  <div class="input-control text">
+                    <input type="password" name="pass"/>
+                  </div>
+                </div>
+                <div class="bottom">
+                  <input type="submit" value="登录"/>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var $form = $('#form-send')
+  $form.on('submit', function(e){
+    e.preventDefault()
+    $.post('/admin/op/login', $form.serializeJSON(), function(data){
+      if (!data['err']) app.loadPage('#songlist')
+    })
+  })
+</script>

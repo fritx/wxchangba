@@ -4,11 +4,18 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="format-detection" content="telephone=no"/>
-  <meta name="x-ua-compatible" content="chrome=1,ie=edge">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
   <title data-bind="meta" data-name="title"></title>
 </head>
 <body style="background-color:#fdfdfd">
 <link rel="stylesheet" href="../lib/common.css"/>
+<style>
+  #logout {
+    cursor: pointer;
+    float: right;
+  }
+</style>
+
 <div id="container">
   <div class="page">
     <div class="nav-bar">
@@ -19,6 +26,9 @@
                 <span data-bind="meta" data-name="title"></span>
                 <small data-bind="meta" data-name="version"></small>
               </span>
+        </a>
+        <a id="logout" class="element">
+          <span>退出</span>
         </a>
       </div>
     </div>
@@ -44,6 +54,7 @@
 <script src="../lib/zepto.min.js"></script>
 <!-- Zepto as jQuery -->
 <script> var jQuery = $; </script>
+<script src="../lib/jquery.serializeJSON.min.js"></script>
 <script src="../lib/common.js"></script>
 
 <script src="../app/app.js"></script>
@@ -52,8 +63,12 @@
 <script src="app/app-song.js"></script>
 <script>
   app.init();
+  app.initAdmin();
   app.showMeta();
-  app.loadPage(window.location.hash || '#songlist');
+  $.get('/admin/op/login', function(data){
+    if (data['err']) return app.loadPage('#login')
+    app.loadPage('#songlist')
+  })
 </script>
 
 <!-- baidi tongji -->

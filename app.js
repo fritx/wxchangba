@@ -4,6 +4,7 @@ var http = require('http'),
   _ = require('underscore'),
   async = require('async'),
   express = require('express'),
+  //quickLogin = require('quick-login'),
   mode = (process.argv && process.argv[2]) || 'example', // 运行模式
   config = require('./config/')(mode),
   app = module.exports = express(),
@@ -163,7 +164,7 @@ async.waterfall([
 
   /* 管理员后台 */
   // 管理员访问过程
-  app.all('/admin/*', function (req, res, next) {
+  app.all('/admin/op/*', function (req, res, next) {
     req.clearUser = function () {
       delete req.session['user'];
     }
@@ -180,18 +181,24 @@ async.waterfall([
     next();
   });
   // 管理员登录
-  app.post('/admin/login', function (req, res) {
+  app.get('/admin/op/login', function (req, res) {
+    if (req.getUser()) return res.send({});
+    res.send({ 'err': 1 });
+  });
+  app.post('/admin/op/login', function (req, res) {
     req.clearUser();
     var user = {
       username: req.body['user'],
       password: req.body['pass']
     }
-    if (!req.isAdmin(user)) return res.send({});
+    if (!req.isAdmin(user)) return res.send({
+      'err': 1, 'msg': '登录失败'
+    });
     req.setUser(user);
     res.send({ 'msg': '登录成功' });
   });
   // 管理员登出
-  app.post('/admin/logout', function (req, res) {
+  app.post('/admin/op/logout', function (req, res) {
     if (!req.getUser()) return res.send({ 'msg': '未登录' });
     req.clearUser();
     res.send({ 'msg': '退出成功' });
@@ -201,6 +208,14 @@ async.waterfall([
     if (!req.isAdmin()) return res.send({ 'msg': '请登录管理员' });
     next();
   });
+  /*app.use('/admin', quickLogin(function(data, next){
+    var user = {
+      username: data.name,
+      password: data.pass
+    };
+    var admin = _.findWhere(adminAccounts, user);
+    next(null, admin);
+  }));*/
   // 查看内容文件列表
   app.get('/admin/op/content/list', function (req, res) {
     var contentDir = config.dirs.content,
@@ -262,6 +277,25 @@ async.waterfall([
       });
     });
   });
+
+  app.post('/admin/op/song/update/:id', function(req, res){
+    var songColl = app.get('songColl'),
+      msgId = parseInt(req.params['id']);
+    var song = {
+      msgid: parseInt(req.body['msgid']),
+      name: req.body['name'],
+      playlength: parseInt(req.body['playlength']),
+      plays: parseInt(req.body['plays']),
+      createtime: req.body['createtime']
+    }
+    song.createtime = parseInt(new Date(song.createtime).getTime() / 1000)
+    songColl.update({ msgid: msgId }, {
+      $set: song
+    }, function (err) {
+      if (err) return res.send({ err: err, 'msg': '保存不成功' });
+      res.send({ 'msg': '保存成功' });
+    });
+  })
 
   /* 歌曲访问 */
   // 歌曲列表

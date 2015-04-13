@@ -22,6 +22,12 @@ app.initAdmin = function () {
   function wxCallback(res) {
     console.log(JSON.stringify(res))
   }
+
+  $('#logout').on('click', function(){
+    $.post('/admin/op/logout', function(){
+      app.loadPage('#login')
+    })
+  })
 }
 
 app.showMeta = function () {

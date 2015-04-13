@@ -20,6 +20,10 @@
     display: none;
   }
 
+  button {
+    margin: 0;
+  }
+
 @media (max-width: 480px) {
   #frame > .page {
     margin-top: -4px;
@@ -44,6 +48,7 @@
       <div class="grid">
         <div class="row">
           <div class="span10">
+          <form id="form">
             <table id="table-song">
               <tbody>
               <tr class="selected-row">
@@ -51,7 +56,7 @@
                   <i class="icon-link"></i>歌曲ID
                 </td>
                 <td>
-                  <span id="msgid"></span>
+                  <input type="text" id="msgid">
                 </td>
               </tr>
               <tr>
@@ -59,7 +64,7 @@
                   <i class="icon-mic"></i>歌曲名称
                 </td>
                 <td>
-                  <span id="songname"></span>
+                  <input type="text" id="songname">
                 </td>
               </tr>
               <tr>
@@ -67,7 +72,7 @@
                   <i class="icon-clock"></i>长度
                 </td>
                 <td>
-                  <span id="playlength"></span>
+                  <input type="text" id="playlength">
                 </td>
               </tr>
               <tr>
@@ -75,7 +80,7 @@
                   <i class="icon-headphones"></i>播放量
                 </td>
                 <td>
-                  <span id="plays"></span>
+                  <input type="text" id="plays">
                 </td>
               </tr>
               <tr>
@@ -83,11 +88,22 @@
                   <i class="icon-calendar"></i>创建时间
                 </td>
                 <td>
-                  <span id="createtime"></span>
+                  <input type="text" id="createtime">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="icon-info"></i>操作
+                </td>
+                <td>
+                  <!-- type="button" 防止默认提交 -->
+                  <button type="button" id="reset_">重置</button>
+                  <button type="button" id="submit">提交</button>
                 </td>
               </tr>
               </tbody>
             </table>
+            </form>
 
             <audio id="audio"></audio>
 

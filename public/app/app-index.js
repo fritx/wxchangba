@@ -6,6 +6,11 @@ app.initIndex = function () {
   app.wxTitle = '一分钟歌声';
   app.wxDesc = '';
 
+  app.isWeixin = !!navigator.userAgent.match(/MicroMessenger/i);
+  if (app.isWeixin) {
+    $('#share-friends').show();
+  }
+
   var wxData = function() {
     return {
       // 这里需要特别说明的是，建议不要用新浪微博的图片地址，要么你试试，哈哈

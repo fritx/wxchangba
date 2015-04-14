@@ -50,7 +50,7 @@ module.exports = {
     account: require('../../private/wx-account') // private
   },
   meta: {
-    title: '一分钟歌声',
+    title: '邑大唱吧',
     year: package['year'],
     version: package['version']
   }

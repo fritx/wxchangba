@@ -29,7 +29,7 @@ app.showSongList = function () {
 
   app.wxLink = app.entry;
   app.wxDesc = rankStr + '列表';
-  document.title = '一分钟歌声-管理平台';
+  document.title = '邑大唱吧-管理平台';
 
   $.get('../song/list', {
     'rank': rank,

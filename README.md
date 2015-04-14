@@ -1,4 +1,4 @@
-# 一分钟歌声 `1min`
+# 邑大唱吧(一分钟歌声) `1min`
 
 - 历史仓库：<https://github.com/fritx/wyu-sing>
 - 在线演示：<http://1min.fritx.me>

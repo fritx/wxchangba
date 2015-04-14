@@ -3,7 +3,7 @@ app.initIndex = function () {
   // 微信分享
   app.wxImg = app.entry + 'logo.jpg';
   app.wxLink = app.entry;
-  app.wxTitle = '一分钟歌声';
+  app.wxTitle = '邑大唱吧';
   app.wxDesc = '';
 
   app.isWeixin = !!navigator.userAgent.match(/MicroMessenger/i);

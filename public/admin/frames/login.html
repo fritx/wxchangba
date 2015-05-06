@@ -1,39 +1,29 @@
 <style>
-  @media (min-width: 980px) {
-    #container {
-      width: 980px;
-      margin: auto;
-    }
-  }
-
-  body {
-    padding: 0 10px !important;
-  }
-
   .page .page-region .page-region-content {
     padding-top: 10px;
   }
 
+  [type="submit"] {
+    background-color: #008287;
+    color: #fff;
+  }
+
+  #form-send {
+    max-width: 400px;
+  }
   #form-send fieldset {
     margin-top: 10px;
     padding: 10px 20px;
   }
-
   #form-send fieldset[disabled] {
     display: none;
   }
-
   #form-send fieldset legend {
     font-size: 16pt;
     top: -30px;
   }
-
   #form-send .bottom {
     margin-top: 15px;
-  }
-
-  #form-send textarea {
-    resize: none;
   }
 </style>
 
@@ -43,7 +33,7 @@
       <h1>
         <i class="icon-home"></i>
         <span>管理平台</span>
-        <small>登录</small>
+        <!-- <small>入口</small> -->
       </h1>
     </div>
   </div>
@@ -57,19 +47,20 @@
             <form id="form-send">
               <fieldset>
                 <div>
-                  <h3>用户名</h3>
+                  <h3><i class="icon-user"></i>用户名</h3>
                   <div class="input-control text">
                     <input type="text" name="user"/>
                   </div>
                 </div>
                 <div>
-                  <h3>密码</h3>
+                  <h3><i class="icon-key"></i>密码</h3>
                   <div class="input-control text">
                     <input type="password" name="pass"/>
                   </div>
                 </div>
                 <div class="bottom">
-                  <input type="submit" value="登录"/>
+                  <!-- <input type="submit" value="登录"/> -->
+                  <button type="submit">登录</button>
                 </div>
               </fieldset>
             </form>
@@ -85,9 +76,8 @@
   $form.on('submit', function(e){
     e.preventDefault()
     $.post('/admin/op/login', $form.serializeJSON(), function(data){
-      if (!data['err']) {
-        app.loadPage('#songlist')
-      }
+      if (data['err']) return app.notify(data['msg'])
+      app.loadPage('#songlist')
     })
   })
 </script>

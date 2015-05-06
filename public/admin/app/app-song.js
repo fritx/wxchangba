@@ -11,6 +11,7 @@ app.showSong = function () {
     $createtime = $tableSong.find('#createtime'),
     $playlength = $tableSong.find('#playlength'),
     $plays = $tableSong.find('#plays'),
+    $published = $tableSong.find('#published'),
     $audio = $frame.find('#audio'),
     $random = $frame.find('#random'),
     $down = $frame.find('#down'),
@@ -21,7 +22,7 @@ app.showSong = function () {
   $back.on('click', app.backFromSong);
   $random.on('click', app.gotoRandomSong);
 
-  $.get('../song/view/' + id, function (data) {
+  $.get('song/view/' + id, function (data) {
     // 如果是字符串则parseJSON
     if (_.isString(data)) data = $.parseJSON(data);
     var msg = data['msg'],
@@ -37,6 +38,7 @@ app.showSong = function () {
 
     document.title = song['name'] + ' - ' + playlengthStr;
 
+    if (song['published']) $published.prop('checked', true);
     $plays.attr('value', song['plays']);
     $createtime.attr('value', song['createtime'] ? (function (t) {
       var d = new Date(t),
@@ -53,7 +55,7 @@ app.showSong = function () {
       app.toggleSong(id, false);
     }).attr('preload', '') // 预加载
     // 加上.mp3后缀 格式友好
-    .attr('src', '../song/down/' + msgId + '.mp3'); // 加载歌曲
+    .attr('src', 'song/down/' + msgId + '.mp3'); // 加载歌曲
 
     $toggle.on('click', function(){
       app.toggleSong(id);
@@ -65,11 +67,12 @@ app.showSong = function () {
     }).enable();
     //$down.addClass('external')
     // .attr('target', '_blank')
-    // .attr('href', '../song/down/' + msgId + '.mp3');
+    // .attr('href', 'song/down/' + msgId + '.mp3');
   
     $form.on('submit', function(e){
       e.preventDefault()
-      $.post('../admin/op/song/update/' + msgId, {
+      $.post('op/song/update/' + msgId, {
+        'published': $published.prop('checked') ? 'on' : '',
         'msgid': $msgid.val(),
         'name': $songname.val(),
         'playlength': $playlength.val(),
@@ -109,7 +112,7 @@ app.toggleSong = function (id, flag) {
 app.downloadSong = function (id) {
   _hmt.push(['_trackEvent', 'admin', 'admin-songdown', 'song-'+id]);
   //window.open('song/down/' + id);
-  location.href = '../song/down/' + id;
+  location.href = 'song/down/' + id;
 }
 app.backFromSong = function () {
   _hmt.push(['_trackEvent', 'admin', 'admin-songback', 'songlist']);

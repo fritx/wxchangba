@@ -11,9 +11,11 @@ var path = require('path'),
   package = require('../../package.json');
 
 module.exports = {
+  mongo: require('../../private/mongo'),
+  admin: require('../../private/admin'),
+  wxacc: require('../../private/wxacc'),
   port: port,
   host: host,
-  mongo: require('../../private/mongo-conn'),
   secret: '' + Math.random(),
   dirs: {
     root: rootDir,
@@ -38,8 +40,7 @@ module.exports = {
     voiceFormat: 'mp3',
     minSeconds: 20,
     maxNameLength: 16,
-    token: 'whahax',
-    account: require('../../private/wx-account') // private
+    token: 'whahax'
   },
   meta: {
     title: '邑大唱吧',

@@ -24,6 +24,9 @@
   input {
     margin: 2px 0;
   }
+  input[type="checkbox"], input[type="radio"] {
+    cursor: pointer;
+  }
   button {
     margin: 0;
     min-width: 60px;
@@ -91,6 +94,14 @@
                 </td>
                 <td>
                   <input type="text" id="createtime">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="icon-glasses-2"></i>公开显示
+                </td>
+                <td>
+                  <input type="checkbox" id="published">
                 </td>
               </tr>
               <tr>

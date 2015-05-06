@@ -29,7 +29,7 @@ app.showSongList = function () {
 
   document.title = '邑大唱吧-管理平台';
 
-  $.get('../song/list', {
+  $.get('song/list', {
     'rank': rank,
     'limit': countPerPage,
     'skip': countPerPage * (page - 1)

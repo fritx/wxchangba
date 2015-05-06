@@ -1,6 +1,6 @@
 app.initAdmin = function () {
   $('#logout').on('click', function(){
-    $.post('/admin/op/logout', function(){
+    $.post('op/logout', function(){
       app.loadPage('#login')
     })
   })
@@ -19,5 +19,17 @@ app.showMeta = function () {
     _.each(meta, function (val, key) {
       $meta.filter('[data-name="' + key + '"]').text(val);
     });
+  });
+}
+
+app.gotoRandomSong = function () {
+  _hmt.push(['_trackEvent', 'app', 'random', 'song']);
+  $.get('song/sample', { 'limit': 1 }, function (data) {
+    // 如果是字符串则parseJSON
+    if (!_.isObject(data)) data = $.parseJSON(data);
+    var songs = data['songs'];
+    if (!songs) throw new Error('歌曲加载失败');
+    if (!songs.length) return app.notify('一首歌都没有..');
+    app.loadPage('#song?id=' + songs[0].msgid);
   });
 }

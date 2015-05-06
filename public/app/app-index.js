@@ -1,31 +1,7 @@
 app.initIndex = function () {
-  app.entry = window.location.origin + window.location.pathname;
-  // 微信分享
-  app.wxImg = app.entry + 'logo.jpg';
-  app.wxLink = app.entry;
-  app.wxTitle = '邑大唱吧';
-  app.wxDesc = '';
-
   app.isWeixin = !!navigator.userAgent.match(/MicroMessenger/i);
   if (app.isWeixin) {
     $('#share-friends').show();
-  }
-
-  var wxData = function() {
-    return {
-      // 这里需要特别说明的是，建议不要用新浪微博的图片地址，要么你试试，哈哈
-      'img': app.wxImg,
-      'link': app.wxLink,
-      'desc': app.wxDesc,
-      'title': app.wxTitle
-    };
-  };
-  //wechat('friend', wxData, wxCallback);     // 朋友
-  //wechat('timeline', wxData, wxCallback);   // 朋友圈
-  //wechat('weibo', wxData, wxCallback);      // 微博
-
-  function wxCallback(res) {
-    console.log(JSON.stringify(res))
   }
 }
 

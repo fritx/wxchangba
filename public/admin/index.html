@@ -13,6 +13,7 @@
   #logout {
     cursor: pointer;
     float: right;
+    display: none;
   }
 </style>
 
@@ -24,11 +25,12 @@
               <span class="element brand">
                 <i class="icon-mic"></i>
                 <span data-bind="meta" data-name="title"></span>
-                <small data-bind="meta" data-name="version"></small>
+                <!-- <small data-bind="meta" data-name="version"></small> -->
+                <small>管理平台</small>
               </span>
         </a>
         <a id="logout" class="element">
-          <span>退出</span>
+          <span><i class="icon-exit"></i>退出</span>
         </a>
       </div>
     </div>
@@ -67,7 +69,7 @@
   app.showMeta();
   $.get('/admin/op/login', function(data){
     if (data['err']) return app.loadPage('#login')
-    app.loadPage('#songlist')
+    app.loadPage(window.location.hash || '#songlist')
   })
 </script>
 

@@ -15,7 +15,7 @@ app.showSong = function () {
     $random = $frame.find('#random'),
     $down = $frame.find('#down'),
     $toggle = $frame.find('#toggle');
-  
+
   _hmt.push(['_trackEvent', 'admin', 'admin-songview', 'song-'+id]);
 
   $back.on('click', app.backFromSong);
@@ -35,9 +35,7 @@ app.showSong = function () {
     var playlengthStr = song['playlength']
     $playlength.attr('value', playlengthStr);
 
-    app.wxLink = window.location.href;
-    app.wxDesc = song['name'] + ' - ' + playlengthStr;
-    document.title = app.wxDesc;
+    document.title = song['name'] + ' - ' + playlengthStr;
 
     $plays.attr('value', song['plays']);
     $createtime.attr('value', song['createtime'] ? (function (t) {

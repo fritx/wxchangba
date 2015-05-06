@@ -3,32 +3,34 @@
     margin-top: 8px;
     margin-bottom: 18px;
   }
-
   #toggle {
     display: inline-block;
   }
-
   #toggle.on #play {
     display: none;
   }
-
   #toggle.off #pause {
     display: none;
   }
-
   #audio {
     display: none;
   }
+  @media (max-width: 480px) {
+    #frame > .page {
+      margin-top: -4px;
+    }
+  }
 
+  input {
+    margin: 2px 0;
+  }
   button {
     margin: 0;
+    min-width: 60px;
   }
-
-@media (max-width: 480px) {
-  #frame > .page {
-    margin-top: -4px;
+  #logout {
+    display: block;
   }
-}
 </style>
 
 <div class="page secondary">

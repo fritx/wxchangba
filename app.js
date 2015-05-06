@@ -288,7 +288,8 @@ async.waterfall([
       plays: parseInt(req.body['plays']),
       createtime: req.body['createtime']
     }
-    song.createtime = parseInt(new Date(song.createtime).getTime() / 1000)
+    var t = new Date(song.createtime).getTime()
+    song.createtime = isNaN(t) ? null : parseInt(t / 1000)
     songColl.update({ msgid: msgId }, {
       $set: song
     }, function (err) {

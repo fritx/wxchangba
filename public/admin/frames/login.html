@@ -10,6 +10,10 @@
     padding: 0 10px !important;
   }
 
+  .page .page-region .page-region-content {
+    padding-top: 10px;
+  }
+
   #form-send fieldset {
     margin-top: 10px;
     padding: 10px 20px;
@@ -81,7 +85,9 @@
   $form.on('submit', function(e){
     e.preventDefault()
     $.post('/admin/op/login', $form.serializeJSON(), function(data){
-      if (!data['err']) app.loadPage('#songlist')
+      if (!data['err']) {
+        app.loadPage('#songlist')
+      }
     })
   })
 </script>

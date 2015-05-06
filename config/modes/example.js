@@ -13,16 +13,8 @@ var path = require('path'),
 module.exports = {
   port: port,
   host: host,
+  mongo: require('../../private/mongo-conn'),
   secret: '' + Math.random(),
-  mongo: {
-    host: 'localhost',
-    port: 27017,
-    //user: {
-    //  username: '',
-    //  password: ''
-    //},
-    dbname: 'etips-www'
-  },
   dirs: {
     root: rootDir,
     public: publicDir = path.join(rootDir, 'public'),

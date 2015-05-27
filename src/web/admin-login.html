@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+  <base href="../">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+  <title>{{pagetitle}}</title>
+  <link rel="stylesheet" href="static/dist/app/common.css">
+  <link rel="stylesheet" href="static/dist/app/admin.css">
+  <style>
+    .page .page-region .page-region-content {
+    padding-top: 10px;
+  }
+  [type="submit"] {
+    background-color: #008287;
+    color: #fff;
+  }
+  #form-send {
+    max-width: 400px;
+  }
+  #form-send fieldset {
+    margin-top: 10px;
+    padding: 10px 20px;
+  }
+  #form-send fieldset[disabled] {
+    display: none;
+  }
+  #form-send fieldset legend {
+    font-size: 16pt;
+    top: -30px;
+  }
+  #form-send .bottom {
+    margin-top: 15px;
+  }
+  </style>
+</head>
+<body>
+
+<!-- 适配微信分享 默认图片占位 -->
+<img style="position:absolute;left:-999px;" src="../static/logox.jpg" alt="logo"/>
+
+<div id="container">
+  <div class="page">
+    <div class="nav-bar header">
+      <div class="nav-bar-inner padding10">
+        <a>
+          <span class="element brand">
+              <i class="icon-mic"></i>
+              <span>{{apptitle}}</span>
+              <small>管理平台</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主题横幅 -->
+  <div class="banner">
+    <img src="static/banner2__.jpg">
+  </div>
+
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-content">
+        <h1>
+          <i class="icon-home"></i>
+          <span>管理平台</span>
+          <small>&nbsp;<!--入口--></small>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class="page secondary">
+    <div class="page-region">
+      <div class="page-region-content">
+        <div class="grid">
+          <div class="row">
+            <div class="span10">
+              <form id="form-send">
+                <fieldset>
+                  <div>
+                    <h3><i class="icon-user"></i>用户名</h3>
+                    <div class="input-control text">
+                      <input type="text" name="user"/>
+                    </div>
+                  </div>
+                  <div>
+                    <h3><i class="icon-key"></i>密码</h3>
+                    <div class="input-control text">
+                      <input type="password" name="pass"/>
+                    </div>
+                  </div>
+                  <div class="bottom">
+                    <!-- <input type="submit" value="登录"/> -->
+                    <button type="submit">登录</button>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="nav-bar footer">
+      <div class="nav-bar-inner padding10">
+        <span class="element">
+                          ©<span>{{appyear}}</span>&nbsp;<span>{{apptitle}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="static/dist/zepto.min.js"></script>
+<script>var jQuery = Zepto</script>
+<script src="static/dist/jquery.serializejson.min.js"></script>
+<script src="static/dist/app/common.js"></script>
+<script>
+  var $form = $('#form-send')
+  $form.on('submit', function(e){
+    e.preventDefault()
+    $.post('api/admin/login', $form.serializeJSON(), function(data){
+      if (data['err']) return alert(data['msg'])
+      location.href = 'admin/'
+    })
+  })
+</script>
+</body>
+</html>

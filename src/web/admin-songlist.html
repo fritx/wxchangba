@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+<head>
+  <base href="../">
+  <meta charset="utf-8">
+  <meta placeholder="-" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta placeholder="-" name="format-detection" content="telephone=no">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+  <title>{{pagetitle}}</title>
+  <link rel="stylesheet" href="static/dist/app/common.css">
+  <link rel="stylesheet" href="static/dist/app/admin.css">
+</head>
+<body>
+
+<!-- 适配微信分享 默认图片占位 -->
+<img style="position:absolute;left:-999px;" src="static/logox.jpg" alt="logo"/>
+
+<div id="container">
+  <div class="page">
+    <div class="nav-bar header">
+      <div class="nav-bar-inner padding10">
+        <a>
+          <span class="element brand">
+              <i class="icon-mic"></i>
+              <span>{{apptitle}}</span>
+              <small>管理平台</small>
+          </span>
+        </a>
+        <a id="logout" class="element">
+          <span><i class="icon-exit"></i>退出</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主题横幅 -->
+  <div class="banner">
+    <img src="static/banner2__.jpg">
+  </div>
+
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-content">
+        <h1>
+    <i class="icon-playlist"></i>
+      <span id="rank">{{listtitle}}</span>
+    <small>
+      共<span id="total">{{numtotal}}</span>首
+    </small>
+  </h1>
+      </div>
+    </div>
+    <div class="page-region">
+      <div class="page-region-content">
+        <div class="grid">
+          <div class="row">
+            <div class="offset1 span10">
+            <form class="addsong">
+            <input type="hidden" placeholder="-" name="plays" value="0">
+            <input type="hidden" placeholder="-" name="published" value="true">
+            <table class="table-song">
+                <tbody>
+                <tr class="selected-row">
+                  <td>
+                    <i class="icon-link"></i>MediaID
+                  </td>
+                  <td>
+                    <input type="text" placeholder="导入歌曲" name="mediaid" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-music"></i>歌曲标题
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="title" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-tag"></i>标签
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="tags" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-tag"></i>隐标签
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="htags" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-user"></i>演唱者
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="author" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-clock"></i>长度
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="playlength" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-calendar"></i>创建时间
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="createtime" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-play-alt"></i>音频
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="localfile" value="">
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              </form>
+
+                  <div class="songlist">
+                  <% _.each(songs, function(song, i){ %>
+              <table class="table-song" data-mediaid="{{song.mediaid}}">
+                <tbody>
+                <tr class="selected-row">
+                  <td>
+                    <i class="icon-link"></i>MediaID
+                  </td>
+                  <td>
+                    <span>{{song.mediaid}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-music"></i>歌曲标题
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="title" value="{{song.title}}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-tag"></i>标签
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="tags" value="<% _.each(song.tags, function(tag){ %> {{tag}} <% }) %><% if (song.wxrecord || song.wxonly) { %> 微 <% } %>">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-tag"></i>隐标签
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="htags" value="<% _.each(song.htags, function(tag){ %> {{tag}} <% }) %>">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-user"></i>演唱者
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="author" value="{{song.author}}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-clock"></i>长度
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="playlength" value="{{song.playlength}}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-headphones"></i>播放量
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="plays" value="{{song.plays}}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-calendar"></i>创建时间
+                  </td>
+                  <td>
+                    <input type="text" placeholder="-" name="createtime" value="{{song.timestr}}">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-glasses-2"></i>是否发布
+                  </td>
+                  <td>
+                    <input type="checkbox" placeholder="-" name="published" <% if (song.published) { %>checked<% } %>>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-play-alt"></i>音频
+                  </td>
+                  <td>
+                    <audio loop controls preload="none" src="{{song.filepath}}"></audio>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+                  <% }) %>
+                  </div>
+                
+                      <div id="pagin-songs" class="pagination">
+                        <ul>
+                          <li class="first <% if (currpage===1) { %>disabled<% } %>">
+                            <a <% if (currpage!==1) { %>href="admin/songlist?page=1"<% } %>></a>
+                          </li>
+                          <% if (currpage-2 >= 1 ) { %>
+                          <li class="disabled"><a>...</a></li>
+                          <% } %>
+                          <% if (currpage === pagetotal && currpage-2 >= 1) { %>
+                          <li><a href="admin/songlist?page={{currpage-2}}">{{currpage-2}}</a></li>
+                          <% } %>
+                          <% if (currpage-1 >= 1) { %>
+                          <li><a href="admin/songlist?page={{currpage-1}}">{{currpage-1}}</a></li>
+                          <% } %>
+                          <li class="active"><a>{{currpage}}</a></li>
+                          <% if (currpage+1 <= pagetotal) { %>
+                          <li><a href="admin/songlist?page={{currpage+1}}">{{currpage+1}}</a></li>
+                          <% } %>
+                          <% if (currpage === 1 && currpage+2 <= pagetotal) { %>
+                          <li><a href="admin/songlist?page={{currpage+2}}">{{currpage+2}}</a></li>
+                          <% } %>
+                          <% if (currpage+2 <= pagetotal) { %>
+                          <li class="disabled"><a>...</a></li>
+                          <% } %>
+                          <li class="last <% if (currpage===pagetotal) { %>disabled<% } %>">
+                            <a <% if (currpage!==pagetotal) { %>href="admin/songlist?page={{pagetotal}}"<% } %>></a>
+                          </li>
+                        </ul>
+                      </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="nav-bar footer">
+      <div class="nav-bar-inner padding10">
+        <span class="element">
+                          ©<span>{{appyear}}</span>&nbsp;<span>{{apptitle}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="static/dist/app/common.js"></script>
+<script src="static/dist/zepto.min.js"></script>
+<script>var jQuery = Zepto</script>
+<script src="static/dist/jquery.serializejson.min.js"></script>
+<script>
+  var urlprefix = '{{urlprefix}}'
+</script>
+
+<script>
+  $('#logout').on(clkev, function(){
+    $.ajax({
+      type: 'POST',
+      url: 'api/admin/logout',
+      success: function(){
+        location.href = 'admin/login'
+      },
+      error: function(){
+        alert('请求失败')
+      }
+    })
+  })
+
+  var $form = $('.addsong')
+  $form.on('submit', function(e){
+    e.preventDefault()
+    var form = $form.serializeJSON()
+    if (form.mediaid && form.title && form.playlength) {
+      $.ajax({
+        type: 'POST',
+        url: 'api/admin/song/add',
+        data: {
+          song: form
+        },
+        success: function(d){
+          if (d.err) return alert('添加失败')
+          location.href = 'admin/songlist' // 回到第1页
+        },
+        error: function(){
+          alert('添加失败')
+        }
+      })
+    }
+  })
+  $form.on('keydown', function(e){
+    if (e.keyCode === 13) $form.submit()
+  })
+
+  var $songlist = $('.songlist')
+  $('audio').on('play', function(){ // 用delegate无效
+    var self = this
+    $('audio').each(function(){ // 暂停其他音频
+      if (this !== self) this.pause()
+    })
+  })
+  $songlist.delegate('input', 'change', function(){
+    var $inp = $(this)
+    var key = $inp.attr('name')
+    var val = $inp.val()
+    if ($inp.attr('type') === 'checkbox') {
+      val = $inp.prop('checked') ? 'true' : 'false'
+    }
+    var patch = {}
+    patch[key] = val
+    var mediaid = $inp.closest('table').attr('data-mediaid')
+    $.ajax({
+      type: 'POST',
+      url: 'api/admin/song/update/' + mediaid,
+      data: {
+        patch: patch
+      },
+      success: function(d){
+        if (d.err) return alert('修改失败')
+        $inp.attr('value', val) // 跟进
+      },
+      error: function(){
+        alert('修改失败')
+        $inp.val($inp.attr('value')) // 回退
+      }
+    })
+  })
+</script>
+</body>
+</html>

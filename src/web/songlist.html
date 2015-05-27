@@ -1,0 +1,422 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+  <meta name="keywords" content="{{appkeyw}}">
+  <meta name="description" content="{{appdesc}}">
+  <title>{{pagetitle}}</title>
+  <link rel="stylesheet" href="static/dist/app/common.css">
+  <style>
+    #table-songs tbody td,
+    #table-playlists tbody td {
+      padding: 3pt;
+      line-height: 11pt;
+    }
+    #table-songs thead th,
+    #table-playlists thead th {
+      padding-left: 2px;
+    }
+    #table-playlists {
+      margin: 0 0 14px;
+    }
+
+    #table-songs {
+      margin-bottom: 0;
+    }
+    #table-songs tr th:nth-child(1) {
+      /*min-width: 87px;*/
+    }
+    #table-songs tr td:nth-child(1) {
+      word-break: normal;
+    }
+    #table-songs tr th:nth-child(2) {
+      min-width: 120px;
+    }
+
+    .qrcode {
+      display: block;
+      margin: 10px;
+      /* float: right; */
+      float: left;
+      /* 如果尺寸过小 长按后难以调出二维码识别 */
+      width: 130px;
+    }
+    .notices > div .notice-header, .notices > div .notice-text {
+      margin-right: 10px;
+      margin-left: 140px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 适配微信分享 默认图片占位 -->
+<img style="position:absolute;left:-999px;" src="static/logox.jpg" alt="logo"/>
+
+<!-- 适配微信分享 分享悬浮按钮 -->
+<!-- <div id="share-tips" ontouchmove="return !1" ontouchend="this.style.display='none'">
+<p>请点击右上角，选择</p>
+<p>【发送给朋友】或【分享好友圈】</p>
+<p>分享给朋友</p>
+</div>
+<div id="share-friends" ontouchend="this.previousElementSibling.style.display='block'">
+<img src="static/renaissance_sharev2_circle.png">
+</div> -->
+
+<!-- 在线录音按钮 -->
+<div class="share-tips" ontouchmove="return !1">
+<p>【录音中】</p>
+<p>点击右下角按钮，结束录音并提交</p>
+<p>至少需要录15秒</p>
+</div>
+<div class="record-btn hidden">
+  <i class="icon-mic"></i>
+</div>
+
+<div id="container">
+  <div class="page">
+    <div class="nav-bar header">
+      <div class="nav-bar-inner padding10">
+        <a>
+          <span class="element brand">
+              <i class="icon-mic"></i>
+              <span>{{apptitle}}</span>
+          <small>{{appversion}}</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主题横幅 -->
+  <div class="banner">
+    <img alt="banner" src="static/banner2__.jpg">
+  </div>
+
+  <div class="page">
+    <div class="page-header">
+      <div class="page-header-content">
+        <h1>
+      <% if (listtype === 'latest') { %>
+      <i class="icon-history"></i>
+      <% } else if (listtype === 'hottest') { %>
+      <i class="icon-stats-up"></i>
+      <% } %>
+      <span id="rank">{{listtitle}}</span>
+    <small>
+      共<span id="total">{{numtotal}}</span>首
+    </small>
+  </h1>
+      </div>
+    </div>
+    <div class="page-region">
+      <div class="page-region-content">
+        <div class="grid">
+          <div class="row">
+            <div class="offset1 span10">
+              <table id="table-playlists">
+                <thead>
+                  <tr>
+                    <th>
+                      <i class="icon-playlist"></i>今日歌单
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% _.each(plists, function(plist){ %>
+                  <tr>
+                    <td>
+                      <a href="playlist/{{plist.plistid}}">{{plist.title}}</a>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+
+              <table id="table-songs">
+                <thead>
+                  <tr>
+                    <th>
+                      <i class="icon-user"></i>演唱者
+                    </th>
+                    <th>
+                      <i class="icon-music"></i>歌曲标题
+                    </th>
+                    <th>
+                      <i class="icon-headphones"></i>播放量
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% _.each(songs, function(song, i){ %>
+                    <tr class="<% if (i===0) { %>selected-row<% } %>">
+                      <td>{{song.author}}</td>
+                      <td><a href="song/{{song.mediaid}}">{{song.title}}
+                      <% _.each(song.tags, function(tag){ %>
+                      [{{tag}}]
+                      <% }) %>
+                      <% if (song.wxonly || song.wxrecord) { %>[微]<% } %>
+                      </a></td>
+                      <td>{{song.plays}}</td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3">
+                      <div id="pagin-songs" class="pagination">
+                        <ul>
+                          <li class="first <% if (currpage===1) { %>disabled<% } %>">
+                            <a <% if (currpage!==1) { %>href="?list={{listtype}}&amp;page=1"<% } %>></a>
+                          </li>
+                          <% if (currpage-2 >= 1 ) { %>
+                          <li class="disabled"><a>...</a></li>
+                          <% } %>
+                          <% if (currpage === pagetotal && currpage-2 >= 1) { %>
+                          <li><a href="?list={{listtype}}&amp;page={{currpage-2}}">{{currpage-2}}</a></li>
+                          <% } %>
+                          <% if (currpage-1 >= 1) { %>
+                          <li><a href="?list={{listtype}}&amp;page={{currpage-1}}">{{currpage-1}}</a></li>
+                          <% } %>
+                          <li class="active"><a>{{currpage}}</a></li>
+                          <% if (currpage+1 <= pagetotal) { %>
+                          <li><a href="?list={{listtype}}&amp;page={{currpage+1}}">{{currpage+1}}</a></li>
+                          <% } %>
+                          <% if (currpage === 1 && currpage+2 <= pagetotal) { %>
+                          <li><a href="?list={{listtype}}&amp;page={{currpage+2}}">{{currpage+2}}</a></li>
+                          <% } %>
+                          <% if (currpage+2 <= pagetotal) { %>
+                          <li class="disabled"><a>...</a></li>
+                          <% } %>
+                          <li class="last <% if (currpage===pagetotal) { %>disabled<% } %>">
+                            <a <% if (currpage!==pagetotal) { %>href="?list={{listtype}}&amp;page={{pagetotal}}"<% } %>></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div class="btngroup">
+                <a class="shortcut" href="song/random?r={{rndcode}}">
+                  <span class="icon">
+                            <i class="icon-link-2"></i>
+                        </span>
+                  <span class="label">随机听</span>
+                </a>
+                <a class="shortcut" href="?list=latest">
+                  <span class="icon">
+                                <i class="icon-history"></i>
+                            </span>
+                  <span class="label">最新列表</span>
+                </a>
+                <a class="shortcut last" href="?list=hottest">
+                  <span class="icon">
+                                <i class="icon-stats-up"></i>
+                            </span>
+                  <span class="label">最火列表</span>
+                </a>
+              </div>
+              <div class="notices">
+                <div class="bg-color-orange fg-color-white">
+                  <!-- <div class="notice-icon">
+                    <i class="icon-mic"></i>
+                  </div> -->
+                  <!-- 公众号二维码 -->
+<img alt="qrcode" class="qrcode" src="static/qrcode_for_gh_cce11d403722_430.jpg">
+                  <div class="notice-header fg-color-white">如何贡献歌声?</div>
+                  <div class="notice-text">
+                    <span class="segment">提交方式:</span>
+                    <span class="segment">
+                      <i class="icon-checkbox"></i>发送语音至微信公众号 (一分钟歌声) 或 (邑点通)
+                    </span>
+                    <span class="segment">
+                      <i class="icon-checkbox"></i>微信内浏览网页可直接录音
+                    </span>
+                    <!-- <span class="segment">
+                      <i class="icon-checkbox"></i>网页上直接录音-敬请期待
+                    </span> -->
+                  </div>
+                  <div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="nav-bar footer">
+      <div class="nav-bar-inner padding10">
+        <span class="element">
+                          ©<span>{{appyear}}</span>&nbsp;<span>{{apptitle}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="static/dist/app/common.js"></script>
+<script src="static/dist/zepto.min.js"></script>
+<script>
+  var urlprefix = '{{urlprefix}}'
+  var lastlist = location.href.replace(location.origin, '')
+  localStorage.setItem('lastlist3', lastlist)
+</script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+var $recordbtn = $('.record-btn')
+var recording = false
+var recordfrom = null
+
+if (isWeixin) {
+$.get('api/wxsign', function(data){
+  if (typeof data !== 'object') {
+    data = JSON.parse(data)
+  }
+  wx.config({
+    //debug: true,
+    appId: data.appId,
+    timestamp: data.timestamp,
+    nonceStr: data.nonceStr,
+    signature: data.signature,
+    jsApiList: [
+      'checkJsApi',
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'startRecord',
+      'stopRecord',
+      'onRecordEnd',
+      'onVoiceRecordEnd',
+      'playVoice',
+      'pauseVoice',
+      'stopVoice',
+      'uploadVoice',
+      'downloadVoice',
+      'openLocation',
+      'getLocation' // 稍后新增位置，如xx网友
+    ]
+  }) //- wx.config
+}) //- $.get
+
+wx.ready(function(){
+  var messageData = {
+    title: document.title,
+    desc: '{{appdesc}}',
+    // 过滤微信客户端附带的干扰参数
+    link: location.href,
+    imgUrl: location.origin + urlprefix + '/static/logo.jpg',
+    trigger: function (res) {
+      //alert('用户点击分享到朋友圈');
+    },
+    success: function (res) {
+      //alert('已分享');
+    },
+    cancel: function (res) {
+      //alert('已取消');
+    },
+    fail: function (res) {
+      //alert(JSON.stringify(res));
+    }
+  }
+  wx.onMenuShareTimeline(messageData)
+  wx.onMenuShareAppMessage(messageData)
+  wx.onMenuShareQQ(messageData)
+  wx.onMenuShareWeibo(messageData)
+
+  //return // 暂时不开放微信录音
+  showrecordbtn()
+}) //- wx.ready
+} //- if isWeixin
+
+if (fakeWeixin) {
+  showrecordbtn()
+}
+
+function showrecordbtn(){
+  wx.onVoiceRecordEnd({
+    complete: function(res){
+      //alert('已经一分钟了')
+      uploadvoice(res)
+    },
+    fail: function(){
+      alert('录音失败')
+      togglerecord(false)
+    }
+  })
+  $recordbtn.on('touchend', function(){
+    if (recording) {
+      if (Date.now() - recordfrom < 15000) return
+      wx.stopRecord({
+        success: function(res){
+          uploadvoice(res)
+        },
+        fail: function(){
+          alert('录音失败')
+          togglerecord(false)
+        }
+      })
+    } else {
+      togglerecord(true)
+      wx.startRecord({
+        cancel: function(){
+          togglerecord(false)
+        }
+      })
+    }
+  })
+  $recordbtn.removeClass('hidden')
+}
+function uploadvoice(res){
+  wx.uploadVoice({
+    localId: res.localId,
+    success: function(res){
+      $.ajax({
+        type: 'POST',
+        url: 'api/wxrecord',
+        data: {
+          mediaid: res.serverId
+        },
+        success: function(){
+          alert('上传成功')
+          togglerecord(false)
+          location.href = '?list=latest'
+        },
+        error: function(){
+          alert('上传失败')
+          togglerecord(false)
+        }
+      })
+    },
+    fail: function(){
+      alert('上传失败')
+      togglerecord(false)
+    }
+  })
+}
+function togglerecord(flag){
+  recording = flag
+  if (flag) {
+    recordfrom = Date.now()
+    $('.share-tips').show()
+    $recordbtn.find('i')
+      .removeClass('icon-mic').addClass('icon-rocket')
+  } else {
+    $('.share-tips').hide()
+    $recordbtn.find('i')
+      .removeClass('icon-rocket').addClass('icon-mic')
+  }
+}
+</script>
+
+{{{statshtml}}}
+</body>
+</html>

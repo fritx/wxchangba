@@ -1,0 +1,11 @@
+{
+  "name": "-",
+  "private": true,
+  "dependencies": {
+    "lodash": "~3.8.0",
+    "jquery": "~2.1.4",
+    "jquery.serializeJSON": "~2.6.0",
+    "zeptojs": "~1.1.6",
+    "animate.css": "~3.3.0"
+  }
+}

@@ -1,0 +1,398 @@
+<!doctype html>
+<html>
+<head>
+  <base href="../"><!-- 统一基准路径，方便操作 -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+  <meta name="keywords" content="{{song.title}}, {{song.author}}, {{song.lengthstr}}, {{appkeyw}}">
+  <meta name="description" content="{{pagetitle}} {{appdesc}}">
+  <title>{{pagetitle}}</title>
+  <link rel="stylesheet" href="static/dist/app/common.css">
+  <style>
+    .table-song {
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+    #toggle {
+      display: inline-block;
+    }
+    #toggle.on #play {
+      display: none;
+    }
+    #toggle.off #pause {
+      display: none;
+    }
+    #audio {
+      display: none;
+    }
+    @media (max-width: 480px) {
+      #frame > .page {
+        margin-top: -4px;
+      }
+    }
+
+    .table-song tbody tr td {
+      /* 取消该处表格 响应式字体缩小 */
+      font-size: 100%;
+      min-width: 108px;
+    }
+    .table-song tbody tr td:nth-child(1) {
+      width: 35%;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 适配微信分享 默认图片占位 -->
+<img style="position:absolute;left:-999px;" src="static/logox.jpg" alt="logo"/>
+
+<!-- 适配微信分享 分享悬浮按钮 -->
+<div class="share-tips arrow" ontouchmove="return !1" ontouchend="this.style.display='none'">
+<p>请点击右上角，选择</p>
+<p>【发送给朋友】或【分享好友圈】</p>
+<p>分享给朋友</p>
+</div>
+<div id="share-friends" ontouchend="this.previousElementSibling.style.display='block'">
+<img alt="share" src="static/renaissance_sharev2_circle.png">
+</div>
+
+<div id="container">
+  <div class="page">
+    <div class="nav-bar header">
+      <div class="nav-bar-inner padding10">
+        <a>
+              <span class="element brand">
+                <i class="icon-mic"></i>
+                <span>{{apptitle}}</span>
+                <small>{{appversion}}</small>
+              </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主题横幅 -->
+  <div class="banner">
+    <img alt="banner" src="static/banner2__.jpg">
+  </div>
+
+  <div class="page secondary">
+    <div class="page-header">
+      <div class="page-header-content">
+        <h1>
+          <i class="icon-music"></i>
+          <span>歌曲</span>
+          <small>播放</small>
+        </h1>
+        <a id="back" class="back-button big page-back"></a>
+      </div>
+    </div>
+
+    <div class="page-region">
+      <div class="page-region-content">
+        <div class="grid">
+          <div class="row">
+            <div class="span10">
+              <table class="table-song">
+                <tbody>
+                <tr class="selected-row">
+                  <td>
+                    <i class="icon-music"></i>歌曲标题
+                  </td>
+                  <td>
+                    <span>{{song.title}}
+                    <% _.each(song.tags, function(tag){ %>
+                    [{{tag}}]
+                    <% }) %>
+                    <% if (song.wxonly || song.wxrecord) { %>[微]<% } %>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-user"></i>演唱者
+                  </td>
+                  <td>
+                    <span>{{song.author}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-clock"></i>长度
+                  </td>
+                  <td>
+                    <span>{{song.lengthstr}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-headphones"></i>播放量
+                  </td>
+                  <td>
+                    <span id="plays">{{song.plays}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="icon-calendar"></i>创建时间
+                  </td>
+                  <td>
+                    <span>{{song.timestr}}</span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              
+              <% if (!song.wxonly) { %>
+              <audio id="audio" loop preload src="{{song.filepath}}"></audio>
+              <% } %>
+
+              <div class="btngroup">
+              <a id="random" class="shortcut">
+                              <span class="icon">
+                                  <i class="icon-link-2"></i>
+                              </span>
+                              <span class="label">
+                                  随机听
+                              </span>
+              </a>
+              <% if (song.next) { %>
+              <a class="shortcut" href="song/{{song.next.mediaid}}">
+              <% } else { %>
+              <a class="shortcut disabled">
+              <% } %>
+                <span class="icon">
+                    <i class="icon-arrow-down"></i>
+                </span>
+                <span class="label">
+                    下一首
+                </span>
+              </a>
+              <div id="toggle" class="off" data-tmpid="{{song._tmpid}}">
+                <a id="play" class="shortcut last">
+                  <span class="icon">
+                      <i class="icon-play"></i>
+                  </span>
+                  <span class="label">
+                      播放
+                  </span>
+                </a>
+                <a id="pause" class="shortcut last">
+                  <span class="icon">
+                      <i class="icon-pause"></i>
+                  </span>
+                  <span class="label">
+                      暂停
+                  </span>
+                </a>
+              </div>
+              </div>
+
+              <div class="notices">
+                <div class="bg-color-greenLight fg-color-white">
+                  <div class="notice-icon">
+                    <i class="icon-volume-2"></i>
+                  </div>
+                  <div class="notice-header fg-color-white">播放后没有声音?</div>
+                  <div class="notice-text">
+                    <span class="segment">请检查:</span>
+                                      <span class="segment">
+                                          <i class="icon-checkbox"></i>网络连接正常
+                                      </span>
+                                      <span class="segment">
+                                          <i class="icon-checkbox"></i>关闭静音模式
+                                      </span>
+                                      <span class="segment">
+                                          <i class="icon-checkbox"></i>音量足够大
+                                      </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="nav-bar footer">
+      <div class="nav-bar-inner padding10">
+                        <span class="element">
+                            ©<span>{{appyear}}</span>&nbsp;<span>{{apptitle}}</span>
+                        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="static/dist/zepto.min.js"></script>
+<script src="static/dist/app/common.js"></script>
+<script>
+  var urlprefix = '{{urlprefix}}'
+  var lastlist = localStorage.getItem('lastlist3') || null
+  $('#back').attr('href', lastlist || 'songlist')
+  $('#random').attr('href', 'song/random?r=' + Math.random())
+</script>
+
+<script>
+  var togglesong = function(){}
+  //var wxonly = !!JSON.parse('{{song.wxonly}}' || 'null')
+  var $audio = $('#audio')
+  var $toggle = $('#toggle')
+  var $play = $toggle.find('#play')
+  var $pause = $toggle.find('#pause')
+  var audio = $audio[0]
+  audio.play = audio.play || function(){}
+  audio.pause = audio.pause || function(){}
+  $audio.on('playing', function(){ // playing事件而不是play
+    togglebtn(true)
+  })
+  $audio.on('pause ended', function(){
+    togglebtn(false)
+  })
+  $play.on(clkev, function(){
+    togglesong(true)
+  })
+  $pause.on(clkev, function(){
+    togglesong(false)
+  })
+  //if (!wxonly) {
+    togglesong = function(flag){
+      if (flag) {
+        audio.pause()
+        audio.play()
+      } else {
+        audio.pause()
+      }
+    }
+    togglesong(true) // 自动播放
+  //} else if (!isWeixin) {
+  //  togglesong = function(flag){
+  //    alert('此歌曲仅在微信内播放')
+  //  }
+  //} //- if !wxonly
+  function togglebtn(flag){
+    togglepulse(flag)
+    if (flag) $toggle.removeClass('off').addClass('on')
+    else $toggle.removeClass('on').addClass('off')
+  }
+
+  var $therow = $('.table-song').find('.selected-row')
+  function togglepulse(flag) {
+    $therow.removeClass('animated pulse infinite')
+    if (flag) $therow.addClass('animated pulse infinite')
+  }
+</script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+if (isWeixin) {
+$.get('api/wxsign', function(data){
+  if (typeof data !== 'object') {
+    data = JSON.parse(data)
+  }
+  wx.config({
+    //debug: true,
+    appId: data.appId,
+    timestamp: data.timestamp,
+    nonceStr: data.nonceStr,
+    signature: data.signature,
+    jsApiList: [
+      'checkJsApi',
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'playVoice',
+      'pauseVoice',
+      'stopVoice',
+      'downloadVoice'
+    ]
+  }) //- wx.config
+}) //- $.get
+
+wx.ready(function(){
+  var messageData = {
+    title: document.title,
+    desc: '{{appdesc}}',
+    // 过滤微信客户端附带的干扰参数
+    link: location.href,
+    imgUrl: location.origin + urlprefix + '/static/logo.jpg',
+    trigger: function (res) {
+      //alert('用户点击分享到朋友圈');
+    },
+    success: function (res) {
+      //alert('已分享');
+    },
+    cancel: function (res) {
+      //alert('已取消');
+    },
+    fail: function (res) {
+      //alert(JSON.stringify(res));
+    }
+  }
+  wx.onMenuShareTimeline(messageData)
+  wx.onMenuShareAppMessage(messageData)
+  wx.onMenuShareQQ(messageData)
+  wx.onMenuShareWeibo(messageData)
+
+  // wxrecord取代 wxonly暂时废弃
+  /*if (wxonly) { // if wxonly
+    var tmpid = '{{song._tmpid}}' // 临时素材 三天有效
+    var localid = null
+    var hasdownload = false
+    wx.onVoicePlayEnd({
+      success: function(){
+        setTimeout(function(){ // 同循环播放
+          togglesong(true)
+        }, 500)
+        //$toggle.removeClass('on').addClass('off')
+        //var $tog = $('#toggle[data-tmpid="'+ tmpid +'"]')
+        //if ($tog.length) togglebtn(false)
+      }
+    })
+    togglesong = function(flag){
+      if (flag) {
+        if (localid) {
+          togglebtn(true)
+          return wx.playVoice({
+            localId: localid
+          })
+        }
+        if (hasdownload) return
+        hasdownload = true
+        wx.downloadVoice({
+          serverId: tmpid,
+          isShowProgressTips: 1,
+          success: function(res){
+            localid = res.localId
+            setTimeout(function(){
+              togglebtn(true)
+              wx.playVoice({
+                localId: localid
+              })
+            }, 1000)
+          },
+          fail: function(){
+            alert('已过期下架')
+            $toggle.removeClass('on').addClass('off')
+          }
+        })
+      } else {
+        wx.stopVoice({
+          localId: localid
+        })
+        togglebtn(false)
+      }
+    }
+  } //- if wxonly*/
+}) //- wx.ready
+} //- if isWeixin
+</script>
+
+{{{statshtml}}}
+</body>
+</html>

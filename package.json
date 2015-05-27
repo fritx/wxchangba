@@ -2,9 +2,9 @@
   "name": "wxchangba",
   "version": "1.0.0",
   "description": "微信唱吧",
+  "private": true,
   "main": "src/server",
   "scripts": {
-    "test": "mocha",
     "start": "node ."
   },
   "dependencies": {

@@ -28,7 +28,7 @@ gulp.task('misc', function () {
     //'bower_components/animate.css/animate.min.css',
     //'bower_components/jquery/dist/jquery.min.js',
     //'bower_components/jquery/dist/jquery.min.map',
-    'bower_components/lodash/lodash.min.js',
+    //'bower_components/lodash/lodash.min.js',
     'bower_components/jquery.serializeJSON/jquery.serializejson.min.js'
     ])
     .pipe(plumber())

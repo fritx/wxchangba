@@ -1,9 +1,15 @@
 # 微信唱吧 `wxchangba`
 
-- 历史仓库: <https://github.com/fritx/wyu-sing>
+- 历史仓库: (邑大唱吧) <https://github.com/fritx/wyu-sing>
 - 0.1.x版本: <https://github.com/fritx/wxchangba/tree/0.1.x>
+- 新版本架构基于: (在线云频道) <https://github.com/fritx/channel>
+- 微信唱吧入口: <http://changba.wx.fritx.me>
 
-在线演示: <http://changba.wx.fritx.me>
+## 技术采用
+
+- 前端主要基于zepto, 微信jssdk
+- 后端主要基于express, lowdb, wx-connect, request/needle
+- 后端配合前端使用lodash/_.template模板渲染页面
 
 ## 搭建指南
 
@@ -37,11 +43,9 @@ $ NODE_ENV=dev node .
 
 ### 平板屏幕
 
-<img width="240" src="pic/songlist-tablet-0.png">&nbsp;&nbsp;&nbsp;
-<img width="240" src="pic/songlist-tablet-1.png">
-
-<img width="240" src="pic/song-tablet-0.png">&nbsp;&nbsp;&nbsp;
-<img width="240" src="pic/song-tablet-1.png">
+<img width="200" src="pic/songlist-tablet-0.png">&nbsp;&nbsp;&nbsp;
+<img width="200" src="pic/songlist-tablet-1.png">&nbsp;&nbsp;&nbsp;
+<img width="200" src="pic/song-tablet-0.png">
 
 ### 歌单播放 / 微信内网页录音
 
@@ -52,8 +56,9 @@ $ NODE_ENV=dev node .
 
 ### 管理平台
 
-<img width="240" src="pic/admin-songlist-0.png">&nbsp;&nbsp;&nbsp;
-<img width="240" src="pic/admin-songlist-1.png">
+<img width="200" src="pic/admin-login.png">&nbsp;&nbsp;&nbsp;
+<img width="200" src="pic/admin-songlist-0.png">&nbsp;&nbsp;&nbsp;
+<img width="200" src="pic/admin-songlist-2.png">
 
 ## 设计图
 

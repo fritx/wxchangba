@@ -9,13 +9,14 @@ var minifycss = require('gulp-minify-css')
 var del = require('del')
 
 gulp.task('zepto', function(){
-    gulp.src([
-      // zeptojs/make :L42 @modules 'zepto event ajax form ie'
-      'bower_components/zeptojs/src/zepto.js',
-      'bower_components/zeptojs/src/event.js',
-      'bower_components/zeptojs/src/ajax.js',
-      'bower_components/zeptojs/src/form.js',
-      'bower_components/zeptojs/src/ie.js'
+  // 控制并发时记得返回
+  return gulp.src([
+    // zeptojs/make :L42 @modules 'zepto event ajax form ie'
+    'bower_components/zeptojs/src/zepto.js',
+    'bower_components/zeptojs/src/event.js',
+    'bower_components/zeptojs/src/ajax.js',
+    'bower_components/zeptojs/src/form.js',
+    'bower_components/zeptojs/src/ie.js'
     ])
     .pipe(plumber())
     .pipe(concat('zepto.min.js'))
@@ -23,7 +24,7 @@ gulp.task('zepto', function(){
     .pipe(gulp.dest('static/dist'))
 })
 gulp.task('misc', function () {
-  gulp.src([
+  return gulp.src([
     'static/lib/**',
     //'bower_components/animate.css/animate.min.css',
     //'bower_components/jquery/dist/jquery.min.js',
@@ -35,8 +36,8 @@ gulp.task('misc', function () {
     //.pipe(uglify())
     .pipe(gulp.dest('static/dist'))
 })
-gulp.task('modern', function () {
-  gulp.src([
+gulp.task('modern', ['misc'], function () {
+  return gulp.src([
     'static/dist/modern/css/modern.css',
     'static/dist/modern/css/modern-responsive.css'
     ])
@@ -48,7 +49,7 @@ gulp.task('modern', function () {
 gulp.task('external', ['zepto', 'misc', 'modern'])
 
 gulp.task('less', function () {
-  gulp.src([
+  return gulp.src([
     'src/web/admin.less',
     'src/web/common.less'
     ])
@@ -63,7 +64,7 @@ gulp.task('less', function () {
     .pipe(gulp.dest('static/dist/app'))
 })
 gulp.task('js', function () {
-  gulp.src([
+  return gulp.src([
     'src/web/**/*.js'
     ])
     .pipe(plumber())
@@ -79,10 +80,10 @@ gulp.task('clean', function (cb) {
 })
 gulp.task('build', ['external', 'source'])
 
-gulp.task('watch', ['source'], function () {
+gulp.task('watch', function () { // watch需要单独开
   gulp.watch('src/web/**/*.less', ['less'])
   gulp.watch('src/web/**/*.js', ['js'])
   //gulp.watch('src/web/**/*.html', ['html'])
 })
 
-gulp.task('default', ['source', 'watch'])
+gulp.task('default', ['source'])

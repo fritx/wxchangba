@@ -13,7 +13,7 @@ var siteurl = 'http://' + sitehost + '/' + urlprefix
 module.exports = {
   defaultauthor: '匿名用户', // fixme: 匿名单独成字段
   apptitle: '微信唱吧',
-  appversion: '0.0.1',
+  appversion: '1.0.0',
   appyear: '2013-2015',
   appkeyw: '微信唱吧, 歌曲, 录音',
   appdesc: '【微信唱吧】发送语音，歌曲自动上榜。微信唱吧，最自有开放的唱吧。',

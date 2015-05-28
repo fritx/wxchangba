@@ -1,13 +1,13 @@
 # 微信唱吧 `wxchangba`
 
 - 历史仓库: (邑大唱吧) <https://github.com/fritx/wyu-sing>
-- 0.1.x版本: <https://github.com/fritx/wxchangba/tree/0.1.x>
+- 0.1.x版本: (一分钟歌声) <https://github.com/fritx/wxchangba/tree/0.1.x>
 - 新版本架构基于: (在线云频道) <https://github.com/fritx/channel>
 - 微信唱吧入口: <http://changba.wx.fritx.me>
 
 ## 技术采用
 
-- 前端主要基于zepto, 微信jssdk
+- 前端主要基于zepto, 微信jssdk, metro-ui-css
 - 后端主要基于express, lowdb, wx-connect, request/needle
 - 后端配合前端使用lodash/_.template模板渲染页面
 

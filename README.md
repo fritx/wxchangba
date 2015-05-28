@@ -17,7 +17,8 @@
 - 通过npm安装gulp/bower
 - 下载源码到本地, 或直接从git克隆
 - 进入目录, 安装npm/bower依赖
-- 复制并自定义配置文件
+- 复制demo文件
+- 自定义config文件
 - 执行构建任务
 - 以特定环境运行, 如dev/test/production, 默认dev
 
@@ -26,6 +27,8 @@ $ npm install --global gulp bower
 $ git clone git@github.com:fritx/wxchangba.git
 $ cd wxchangba
 $ npm install && bower install
+$ cp db-demo.json db.json
+$ cp -r media-demo media
 $ cp -r config-demo config
 $ vim config/dev.js
 $ gulp build

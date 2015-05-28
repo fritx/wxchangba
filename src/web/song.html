@@ -149,9 +149,9 @@
                               </span>
               </a>
               <% if (song.next) { %>
-              <a class="shortcut" href="song/{{song.next.mediaid}}">
+              <a id="next" class="shortcut" href="song/{{song.next.mediaid}}">
               <% } else { %>
-              <a class="shortcut disabled">
+              <a id="next" class="shortcut disabled">
               <% } %>
                 <span class="icon">
                     <i class="icon-arrow-down"></i>

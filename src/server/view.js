@@ -5,6 +5,8 @@ var _ = require('lodash')
 var config = require('../../config')
 //var hbs = exphbs.create()
 //var Handlebars = hbs.handlebars
+var fs = require('fs')
+var statshtml = fs.readFileSync(config.statsfile).toString()
 
 module.exports = function (app) {
   //app.engine('jade', jade.__express)
@@ -25,8 +27,10 @@ module.exports = function (app) {
     var data = _.extend(_.pick(config, [
       'appkeyw', 'appdesc',
       'apptitle', 'appyear', 'appversion',
-      'urlprefix', 'statshtml'
-    ]), res.__data)
+      'urlprefix'
+    ]), {
+      statshtml: statshtml
+    }, res.__data)
     res.render(res.__tmpl, data)
   })
 }

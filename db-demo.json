@@ -1,0 +1,59 @@
+{
+  "songs": [
+    {
+      "_id": {
+        "$oid": "55196707435046fc75f709d0"
+      },
+      "playlength": 25,
+      "plays": 182,
+      "published": true,
+      "createtime": "2013-10-29 19:58:10",
+      "mediaid": "7758",
+      "_msgid": 7758,
+      "_title": "Hey Jude",
+      "tags": [
+        "英"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "55196707435046fc75f709d8"
+      },
+      "playlength": 20,
+      "plays": 103,
+      "published": true,
+      "createtime": "2013-11-03 12:27:55",
+      "mediaid": "7981",
+      "_msgid": 7981,
+      "_title": "蓝莲花"
+    },
+    {
+      "_id": {
+        "$oid": "55196707435046fc75f709e0"
+      },
+      "playlength": 47,
+      "plays": 117,
+      "published": true,
+      "createtime": "2013-11-07 22:53:01",
+      "mediaid": "8076",
+      "_msgid": 8076,
+      "_title": "洋葱"
+    }
+  ],
+  "playlists": [
+    {
+      "published": true,
+      "plistid": "20150528",
+      "songids": [
+        "7758",
+        "7981",
+        "8076"
+      ],
+      "title": "【0528中国好声音】Hey Jude, 蓝莲花, 洋葱",
+      "subtitle": "0528中国好声音",
+      "createtime": "2015-05-28 14:14:00"
+    }
+  ],
+  "access_token": [],
+  "jsapi_ticket": []
+}

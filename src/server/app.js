@@ -15,11 +15,10 @@ app.enable('trust proxy')
 app.use(morgan('dev'))
 app.use(compression())
 
-// 暂时无需支持session
 app.use(session({
   secret: ''+Math.random(),
-  resave: true,
-  saveUninitialized: true
+  resave: false,
+  saveUninitialized: false // 惰性session
 }))
 
 app.use('/', favicon(

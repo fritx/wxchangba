@@ -8,7 +8,7 @@ var realWeixin = !!navigator.userAgent.match(/MicroMessenger/i);
 var fakeWeixin = !!location.search.match(/[\?&](wx$|wx&)/)
 var isWeixin = realWeixin || fakeWeixin
 if (isWeixin) {
-  showshare()
+  //showshare()
 }
 function showshare(){
   var _share = document.getElementById('share-friends')

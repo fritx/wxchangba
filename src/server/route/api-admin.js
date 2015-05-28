@@ -60,7 +60,8 @@ module.exports = function(app){
     })
     if (patch['createtime']) {
       var date = new Date(patch['createtime'])
-      song['createtime'] = datestr.tostr(date) || null
+      song['createtime'] = isNaN(date.valueOf()) ?
+        '-' : patch['createtime']
     }
     if (patch['tags'] != null) {
       var tags = patch['tags'].split(/\s+/)
@@ -91,8 +92,9 @@ module.exports = function(app){
     _.each(['playlength', 'plays'], function(k){
       song[k] = parseInt(song[k]) || 0
     })
-    var date = new Date(song['createtime'] || Date.now())
-    song['createtime'] = datestr.tostr(date) || null
+    // createtime保留自定字符串
+    song['createtime'] = song['createtime'] ||
+      datestr.tostr(Date.now())
     song['tags'] = song['tags'].split(/\s+/)
     song['htags'] = song['htags'].split(/\s+/)
     clearsong(song)

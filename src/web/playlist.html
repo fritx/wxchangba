@@ -45,18 +45,8 @@
 </head>
 <body>
 
-<!-- 适配微信分享 默认图片占位 -->
+<!-- 适配x信x享 默认图片占位 -->
 <img style="position:absolute;left:-999px;" src="static/logox.jpg" alt="logo"/>
-
-<!-- 适配微信分享 分享悬浮按钮 -->
-<div class="share-tips arrow" ontouchmove="return !1" ontouchend="this.style.display='none'">
-<p>请点击右上角，选择</p>
-<p>【发送给朋友】或【分享好友圈】</p>
-<p>分享给朋友</p>
-</div>
-<div id="share-friends" ontouchend="this.previousElementSibling.style.display='block'">
-<img alt="share" src="static/renaissance_sharev2_circle.png">
-</div>
 
 <div id="container">
   <div class="page">
@@ -334,16 +324,12 @@ wx.ready(function(){
     link: location.href,
     imgUrl: location.origin + urlprefix + '/static/logo.jpg',
     trigger: function (res) {
-      //alert('用户点击分享到朋友圈');
     },
     success: function (res) {
-      //alert('已分享');
     },
     cancel: function (res) {
-      //alert('已取消');
     },
     fail: function (res) {
-      //alert(JSON.stringify(res));
     }
   }
   wx.onMenuShareTimeline(messageData)

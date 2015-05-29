@@ -15,9 +15,6 @@
       margin-top: 8px;
       margin-bottom: 16px;
     }
-    #toggle {
-      display: inline-block;
-    }
     #toggle.on #play {
       display: none;
     }
@@ -139,6 +136,7 @@
               
               <audio id="audio" preload src="{{songs[0].filepath}}"></audio>
 
+            <div id="toggle" class="off" data-tmpid="">
               <div class="btngroup">
               <a id="random" class="shortcut">
                               <span class="icon">
@@ -160,7 +158,7 @@
                     下一首
                 </span>
               </a>
-              <div id="toggle" class="off" data-tmpid="">
+              <!-- <div id="toggle" class="off" data-tmpid=""> -->
                 <a id="play" class="shortcut last">
                   <span class="icon">
                       <i class="icon-play"></i>
@@ -177,8 +175,9 @@
                       暂停
                   </span>
                 </a>
+              <!-- </div> -->
               </div>
-              </div>
+            </div>
 
               <div class="notices">
                 <div class="bg-color-greenLight fg-color-white">

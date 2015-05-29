@@ -6,6 +6,7 @@ var config = require('../../config')
 //var hbs = exphbs.create()
 //var Handlebars = hbs.handlebars
 var fs = require('fs')
+var minify = require('html-minifier').minify
 var statshtml = fs.readFileSync(config.statsfile).toString()
 
 module.exports = function (app) {
@@ -38,6 +39,12 @@ module.exports = function (app) {
 // fixme: 通用cache
 // fixme: 并发cache
 var fscache = require('./lib/fscache')
+var minopts = {
+  minifyCSS: true,
+  minifyJS: true,
+  collapseWhitespace: true, // 小心inline-block边距坑
+  removeComments: true
+}
 function viewEngine(viewpath, data, callback){
   fscache.get(viewpath, function(err, buf){
     if (err) return callback(err)
@@ -46,6 +53,7 @@ function viewEngine(viewpath, data, callback){
       var str = buf.toString()
       var tmplfn = _.template(str)
       output = tmplfn(data)
+      output = minify(output, minopts)
     } catch(err1) {
       //console.error(err1)
       return callback(err1)

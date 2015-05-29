@@ -39,23 +39,23 @@ $ NODE_ENV=dev node .
 
 ### 手机屏幕
 
-<img width="150" src="pic/songlist-phone-0.png">&nbsp;&nbsp;&nbsp;
-<img width="150" src="pic/songlist-phone-1.png">&nbsp;&nbsp;&nbsp;
-<img width="150" src="pic/song-phone-0.png">&nbsp;&nbsp;&nbsp;
-<img width="150" src="pic/song-phone-1.png">
+<img width="150" src="pic/xs-songlist-0.png">&nbsp;&nbsp;&nbsp;
+<img width="150" src="pic/xs-songlist-1.png">&nbsp;&nbsp;&nbsp;
+<img width="150" src="pic/xs-song-0.png">&nbsp;&nbsp;&nbsp;
+<img width="150" src="pic/xs-song-1.png">
 
 ### 平板屏幕
 
-<img width="200" src="pic/songlist-tablet-0.png">&nbsp;&nbsp;&nbsp;
-<img width="200" src="pic/songlist-tablet-1.png">&nbsp;&nbsp;&nbsp;
-<img width="200" src="pic/song-tablet-0.png">
+<img width="200" src="pic/md-songlist-0.png">&nbsp;&nbsp;&nbsp;
+<img width="200" src="pic/md-songlist-1.png">&nbsp;&nbsp;&nbsp;
+<img width="200" src="pic/md-song-0.png">
 
 ### 歌单播放 / 微信内网页录音
 
-<img width="150" src="pic/playlist-0.png">&nbsp;&nbsp;&nbsp;
-<img width="150" src="pic/playlist-1.png">&nbsp;&nbsp;&nbsp;
-<img width="150" src="pic/wx-record-0.png">&nbsp;&nbsp;&nbsp;
-<img width="150" src="pic/wx-record-1.png">
+<img width="150" src="pic/xs-playlist-0.png">&nbsp;&nbsp;&nbsp;
+<img width="150" src="pic/xs-playlist-1.png">&nbsp;&nbsp;&nbsp;
+<img width="150" src="pic/xs-wxrecord-0.png">&nbsp;&nbsp;&nbsp;
+<img width="150" src="pic/xs-wxrecord-1.png">
 
 ### 管理平台
 

@@ -5,3 +5,4 @@ media
 db.json
 *.apk
 static/dist
+build

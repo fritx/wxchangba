@@ -48,12 +48,12 @@ var minopts = {
 function viewEngine(viewpath, data, callback){
   fscache.get(viewpath, function(err, buf){
     if (err) return callback(err)
-    var output = ''
     try {
       var str = buf.toString()
       var tmplfn = _.template(str)
-      output = tmplfn(data)
-      output = minify(output, minopts)
+      var output = tmplfn(data)
+      // fixme: 需要转移到预编译
+      //output = minify(output, minopts)
     } catch(err1) {
       //console.error(err1)
       return callback(err1)

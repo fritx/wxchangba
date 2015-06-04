@@ -13,6 +13,9 @@
       "_title": "Hey Jude",
       "tags": [
         "英"
+      ],
+      "htags": [
+        "女"
       ]
     },
     {
@@ -51,7 +54,7 @@
       "_msgid": 201733364,
       "_fakeid": "2474950401",
       "_title": "歌曲 201733364",
-      "_author": "zaed",
+      "_nickname": "zaed",
       "tags": [
         "印"
       ],
@@ -70,7 +73,7 @@
       "_msgid": 205307626,
       "_fakeid": "650345445",
       "_title": "歌曲 205307626",
-      "_author": "Pascal Su",
+      "_nickname": "Pascal Su",
       "tags": [
         "英"
       ],

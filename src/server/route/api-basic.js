@@ -4,6 +4,7 @@ var path = require('path')
 var wxm = require('../wx')
 var datestr = require('../lib/datestr')
 var clearsong = require('../lib/clearsong')
+var config = require('../../../config')
 
 module.exports = function(app){
   app.get('/api/wxsign', function(req, res, next){
@@ -20,7 +21,7 @@ module.exports = function(app){
       if (e || !b) return res.status(500).end()
       var mediaid = datestr.tostr3(Date.now()) + '_' + _tmpid.slice(0, 6)
       var localfile = mediaid + '.mp3'
-      var filepath = path.join(config.mediadir, localfile)
+      var filepath = config.mediadir + '/' +  localfile
       // 保存临时素材到本地 web不可播放
       // fixme: 使用管道可以减少一次本地io
       fs.writeFile(filepath, b, function(e){

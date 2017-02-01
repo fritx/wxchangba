@@ -1,8 +1,8 @@
 {
-  "name": "-",
+  "name": "wxchangba",
   "private": true,
   "dependencies": {
     "jquery.serializeJSON": "~2.6.0",
-    "zeptojs": "~1.1.6",
+    "zeptojs": "~1.1.6"
   }
 }

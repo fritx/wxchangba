@@ -10,7 +10,7 @@ module.exports = function fillsong(song){
   if (len == null) {
     song.lengthstr = '-'
   } else {
-    len = Math.min(len, 60) // 不应该显示成超过60″
+    if (len === 61) len = 60 // 相当一部分都是61″ 显示为60″
     song.lengthstr = len + '″'
   }
 

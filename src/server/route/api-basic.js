@@ -16,6 +16,7 @@ module.exports = function(app){
 
   app.post('/api/wxrecord', function(req, res, next){
     var _tmpid = req.body['mediaid']
+    console.log('wxrecord receiving tmpid:', _tmpid)
     // 获取临时素材
     wxm.getMedia(_tmpid, function(e, b){
       if (e || !b) return res.status(500).end()
@@ -29,6 +30,7 @@ module.exports = function(app){
         // 上传永久素材
         wxm.postMaterial('voice', filepath, function(e, d){
           if (e) return res.status(500).end()
+          console.log('wxrecord material posted:', d.media_id)
       // 保存永久素材到本地 web可解码
       wxm.getMaterial(d.media_id, function(e, b){
         if (e) return res.status(500).end()

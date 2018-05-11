@@ -1,9 +1,0 @@
-node_modules
-bower_components
-config
-media
-db.json
-*.apk
-static/dist
-build
-*.log

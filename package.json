@@ -4,6 +4,7 @@
   "description": "微信唱吧: 基于node.js和微信jssdk的校园轻应用",
   "repository": "git@github.com:fritx/wxchangba.git",
   "license": "MIT",
+  "private": true,
   "main": "src/server",
   "scripts": {
     "start": "node ."

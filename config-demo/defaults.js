@@ -46,6 +46,7 @@ module.exports = {
     appsecret: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
   },
 
+  pickthrottle: 30, // 每x秒最多抓取一次
   staticcache: 60, // min
   viewcache: 30,
   dbfile: dbfile,

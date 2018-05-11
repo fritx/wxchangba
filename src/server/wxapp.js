@@ -13,7 +13,8 @@ module.exports = wxapp
 function wxapp(mainapp){
   var pubs = []
   _.each(config.wxs, function(data){
-    pubs[data.rawid] = new Wxpub(data)
+    var pub = new Wxpub(data)
+    pubs[data.rawid] = pub
   })
 
   // 抓取公众号语音
@@ -28,6 +29,7 @@ function wxapp(mainapp){
       }
       var period = 30*60*1000 // 抓取区间30分钟
       msgs = msgs.reverse() // 按时间升序
+      console.log(pub.data.rawid, msgs.length + ' voices detected')
       msgs = _.filter(msgs, function(msg){
         msg._playlength = Math.round(msg['play_length'] / 1000)
         return msg['type'] === 3 &&
@@ -80,7 +82,13 @@ function wxapp(mainapp){
         console.log(pub.data.rawid, 'pickupvoice round complete')
       })
     })
-  }, 30000) // 每30秒最多抓取一次
+  }, config.pickthrottle) // 每x秒最多抓取一次
+
+  // 自动触发一次抓
+  _.each(config.wxs, function(data){
+    var pub = pubs[data.rawid]
+    pickupvoice(data.rawid)
+  })
 
   var app = wxconnect({
     appToken: config.wxsapptoken

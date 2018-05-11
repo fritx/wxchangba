@@ -32,12 +32,15 @@ module.exports = {
     {
       rawid: 'gh_xxxxxxxxxxxx',
       user: 'xxxxxxxxx@163.com',
-      pass: 'xxxxxx'
+      pass: 'xxxxxx',
+      // cookie记住一定要从请求http/headers里取
+      cookie: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      token: 'xxxxxxxxxx'
     },
     {
       rawid: 'gh_xxxxxxxxxxxx',
-      user: 'xxxxxxxxx@163.com',
-      pass: 'xxxxxx'
+      user: 'xxxxxxxxx@163.com'
+      // ...字段同上
     }
   ],
   wxm: { // 单个认证master，使用高级接口

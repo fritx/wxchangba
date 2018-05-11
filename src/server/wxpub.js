@@ -3,6 +3,8 @@ var config = require('../../config')
 var db = require('./db')
 var _ = require('lodash')
 var needle = require('needle')
+var cookie = require('cookie')
+
 module.exports = Wxpub
 var urlhost = 'https://mp.weixin.qq.com'
 var headers = {
@@ -16,8 +18,9 @@ var viewcount = 100
 
 function Wxpub(data){
   this.data = data
-  this.cookies = {}
-  this.token = null
+  // this.cookies = {}
+  this.cookies = cookie.parse(data.cookie)
+  this.token = data.token
   this.msglisturl = null
 }
 

@@ -120,7 +120,7 @@ function reqPostMaterial(type, file, cb){
     // 请求库无法达到要求
     // 不得已 使用curl命令行调用
     // 注意防御注入
-    cp.exec('curl "'+ url +'" -F media=@"' + file + '"', function(e, sout, serr){
+    cp.execFile('curl', [url, '-F', 'media=@', file], function(e, sout, serr){
       if (e) return cb(e)
       try {
         var d = JSON.parse(sout)
